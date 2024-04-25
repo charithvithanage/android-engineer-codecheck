@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Android Engineer Code Check</string>
+    <string name="app_name">GitHub Explorer</string>
     <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
-    <string name="written_language">Written in %s</string>
 
     //TextView Labels
-    <string name="welcomePageContent">This is Welcome Page Content</string>
+    <string name="welcomePageContent">Explore the world of GitHub like never before with GitHub Explorer, your all-in-one companion for discovering, managing, and staying connected with your favorite GitHub accounts.</string>
 
     //Button Labels
     <string name="next">Next</string>
+    <string name="welcomePageTitle">Welcome to GitHub Explorer!</string>
 </resources>
