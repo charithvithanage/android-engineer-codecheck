@@ -8,4 +8,5 @@
     <dimen name="content_margin">16dp</dimen>
     <dimen name="page_padding">24dp</dimen>
     <dimen name="buttonRadius">8dp</dimen>
+    <dimen name="titleTopMargin">48dp</dimen>
 </resources>

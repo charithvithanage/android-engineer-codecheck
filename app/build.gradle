@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.devtools.ksp'
 }
 
 android {
@@ -51,6 +53,7 @@ dependencies {
     def junit_version = "4.13.2"
     def ext_junit_version = "1.1.5"
     def espresso_version = "3.5.1"
+    def hilt_version = '2.51.1'
 
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
@@ -73,6 +76,10 @@ dependencies {
 
     //  ———  Image Library ——— //
     implementation "io.coil-kt:coil:$coil_version"
+
+    //  ——— Dagger - Hilt ——— //
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    ksp("com.google.dagger:hilt-android-compiler:$hilt_version")
 
     //  ——— Testing Library ——— //
     testImplementation "junit:junit:$junit_version"
