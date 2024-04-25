@@ -21,7 +21,7 @@ class SharedPreferencesManagerTest {
     private lateinit var sharedPreferences: SharedPreferences
     @Before
     fun setUp() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         // Mock SharedPreferences
         sharedPreferences = Mockito.mock<SharedPreferences>()
 
