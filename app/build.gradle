@@ -54,6 +54,7 @@ dependencies {
     def ext_junit_version = "1.1.5"
     def espresso_version = "3.5.1"
     def hilt_version = '2.51.1'
+    def mockito_version = '5.11.0'
 
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
@@ -86,4 +87,8 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
+
+    // ——— Mockito dependencies ——— //
+    testImplementation("org.mockito:mockito-core:$mockito_version")
+    androidTestImplementation("org.mockito:mockito-android:$mockito_version")
 }
