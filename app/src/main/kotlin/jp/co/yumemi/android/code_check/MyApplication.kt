@@ -1,7 +1,9 @@
 package jp.co.yumemi.android.code_check
 
 import android.app.Application
+import android.content.Context
 import dagger.hilt.android.HiltAndroidApp
+import jp.co.yumemi.android.code_check.utils.SharedPreferencesManager
 
 /**
  * Custom [Application] class for MyApplication.
@@ -16,5 +18,10 @@ class MyApplication : Application() {
      */
     override fun onCreate() {
         super.onCreate()
+        // Initialize SharedPreferencesManager with the application's SharedPreferences.
+        getSharedPreferences(
+            getString(R.string.preference_file_key),
+            Context.MODE_PRIVATE
+        ).let { SharedPreferencesManager.init(it) }
     }
 }

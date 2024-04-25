@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="vm"
+            type="jp.co.yumemi.android.code_check.ui.welcome.WelcomeFragmentViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="@dimen/page_padding"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/englishBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:onClick="@{() -> vm.onEnglishLayoutClicked()}"
+                android:text="@string/english"
+                bind:selected='@{vm.shouldSelectEnglish}' />
+
+            <TextView
+                android:id="@+id/japaneseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/horizontal_margin"
+                android:onClick="@{() -> vm.onJapaneseLayoutClicked()}"
+                android:text="@string/japanese"
+                bind:selected='@{vm.shouldSelectJapanese}' />
+
+        </LinearLayout>
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="100dp"
@@ -26,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/page_padding"
             android:layout_marginEnd="@dimen/page_padding"
-            android:text="@string/app_name"
+            android:text="@{vm.titleLabel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/titleTopMargin"
@@ -40,7 +72,7 @@
             android:layout_marginStart="@dimen/page_padding"
             android:layout_marginEnd="@dimen/page_padding"
             android:layout_marginTop="@dimen/content_margin"
-            android:text="@string/welcomePageContent"
+            android:text="@{vm.contentLabel}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -65,7 +97,7 @@
             android:layout_marginStart="@dimen/page_padding"
             android:layout_marginEnd="@dimen/page_padding"
             android:layout_marginBottom="50dp"
-            android:text="@string/next"
+            android:text="@{vm.btnText}"
             app:layout_constraintBottom_toTopOf="@+id/imageView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

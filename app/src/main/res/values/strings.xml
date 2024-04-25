@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GitHub Explorer</string>
+    <string name="preference_file_key">Android Engineer CodeCheck Pref</string>
+
     <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
 
     //TextView Labels
@@ -8,4 +10,6 @@
     //Button Labels
     <string name="next">Next</string>
     <string name="welcomePageTitle">Welcome to GitHub Explorer!</string>
+    <string name="english">English</string>
+    <string name="japanese">日本語</string>
 </resources>
