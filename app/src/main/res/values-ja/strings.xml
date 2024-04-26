@@ -10,6 +10,7 @@
     <string name="menu_settings">設定</string>
     <string name="details">詳細</string>
     <string name="select_app_language">アプリの言語</string>
+    <string name="web_profile_view_details">ウェブプロフィール</string>
 
     //TextView Labels
     <string name="welcomePageContent">GitHub Explorer を使って、これまでにないほどの GitHub の世界を探検しましょう。GitHub Explorer は、お気に入りの GitHub アカウントを見つけたり、管理したり、つながったりするためのすべてがひとつになったお供です。</string>

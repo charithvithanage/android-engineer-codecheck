@@ -87,14 +87,15 @@ class MainActivity : AppCompatActivity() {
         when (orientation) {
             Configuration.ORIENTATION_PORTRAIT -> {
                 // Code to show the bottom menu
-                binding.bottomNavigationMenu.isVisible = true
+//                binding.bottomNavigationMenu.isVisible = true
+//                binding.drawerSideMenu.isVisible = false
                 Toast.makeText(this, "Portrait", Toast.LENGTH_SHORT).show()
             }
             Configuration.ORIENTATION_LANDSCAPE -> {
                 // Code to show the side menu
-                binding.bottomNavigationMenu.isVisible = false
-                Toast.makeText(this, "Landscape", Toast.LENGTH_SHORT).show()
-
+//                binding.bottomNavigationMenu.isVisible = false
+//                binding.drawerSideMenu.isVisible = true
+//                Toast.makeText(this, "Landscape", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -19,6 +19,12 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <style name="SideMenuTextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Action Bar Style -->
     <style name="ActionBarTitleStyle">
         <item name="android:textColor">@color/primary_color_dark</item>
