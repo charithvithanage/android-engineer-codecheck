@@ -4,14 +4,17 @@
 package jp.co.yumemi.android.code_check.ui.main
 
 import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.utils.LanguageManager
 
@@ -44,17 +47,48 @@ class MainActivity : AppCompatActivity() {
                 setBackGroundImage(uiMode)
             }
 
-
-//            setupNavController()
-//            setSupportActionBar(toolbar)
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
                 sharedViewModel = this
-//                setFragmentName(LocalHelper.getString(this@MainActivity, R.string.menu_home))
             }
 
-//            btnBack.setOnClickListener {
-//                onBackPressed()
-//            }
+            viewModelObservers()
+        }
+    }
+
+
+    /**
+     * Observers for LiveData changes in the shared view model.
+     */
+    private fun viewModelObservers() {
+        sharedViewModel.apply {
+            /**
+             * Observes changes in the sharedViewModel's fragment LiveData and updates the UI elements
+             * in the MainActivity accordingly.
+             *
+             * @param fragment The LiveData that represents the current fragment.
+             */
+
+            binding.apply {
+                fragment.observe(this@MainActivity) {
+                    // Set the title text based on the observed fragment
+                    when (it) {
+                        StringConstants.WELCOME_FRAGMENT -> {
+                            toolbar.isVisible = false
+                            title.isVisible = false
+                            bottomNavigationMenu?.isVisible = false
+                            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                        }
+
+                        StringConstants.HOME_FRAGMENT -> {
+                            toolbar.isVisible = true
+                            title.isVisible = true
+                            bottomNavigationMenu?.isVisible = true
+                            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
+                        }
+                    }
+                }
+            }
 
         }
     }
@@ -75,10 +109,19 @@ class MainActivity : AppCompatActivity() {
             // Set dark mode background image
             // Set light mode background image
             when (mode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> setBackgroundResource(
-                    R.mipmap.night_bg
-                )
-                else -> setBackgroundResource(R.mipmap.bg)
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    setBackgroundResource(
+                        R.mipmap.night_bg
+                    )
+
+                    binding.drawerSideMenu?.mainLayout?.setBackgroundColor(Color.parseColor("#000000"))
+                }
+
+                else -> {
+                    setBackgroundResource(R.mipmap.bg)
+                    binding.drawerSideMenu?.mainLayout?.setBackgroundColor(Color.parseColor("#ffffff"))
+
+                }
             }
         }
     }
@@ -91,6 +134,7 @@ class MainActivity : AppCompatActivity() {
 //                binding.drawerSideMenu.isVisible = false
                 Toast.makeText(this, "Portrait", Toast.LENGTH_SHORT).show()
             }
+
             Configuration.ORIENTATION_LANDSCAPE -> {
                 // Code to show the side menu
 //                binding.bottomNavigationMenu.isVisible = false

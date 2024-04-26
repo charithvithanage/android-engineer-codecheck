@@ -18,7 +18,8 @@
             android:layout_marginEnd="@dimen/page_padding"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/vertical_margin">
 
             <TextView
                 android:id="@+id/englishBtn"

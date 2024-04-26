@@ -24,7 +24,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStart="0dp"
-            android:layout_marginTop="@dimen/vertical_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,11 +40,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="10dp"
+                    android:layout_marginTop="@dimen/vertical_margin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <RelativeLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
@@ -56,7 +56,21 @@
                             android:adjustViewBounds="true"
                             android:background="@drawable/link_button_background"
                             android:importantForAccessibility="no"
-                            android:src="@drawable/left_arrow" />
+                            android:src="@drawable/left_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/title"
+                            style="@style/FragmentTitleStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/menu_home"
+                            android:layout_marginLeft="@dimen/mini_horizontal_margin"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/leftButton"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageButton
                             android:id="@+id/homeButton"
@@ -65,41 +79,16 @@
                             android:layout_alignParentEnd="true"
                             android:adjustViewBounds="true"
                             android:background="@drawable/link_button_background"
-                            android:src="@mipmap/icon_home"
-                            android:padding="12dp"
-                            android:scaleType="fitCenter"/>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="@dimen/actionBarLogoSize"
-                    android:layout_height="@dimen/actionBarLogoSize"
-                    app:cardCornerRadius="@dimen/actionBarLogoBgCornerRadius"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/cardView">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:adjustViewBounds="true"
-                        android:importantForAccessibility="no"
-                        android:padding="10dp"
-                        android:src="@mipmap/ic_launcher" />
+                            android:scaleType="fitCenter"
+                            android:src="@mipmap/ic_launcher"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:padding="4dp"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/FragmentTitleStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/page_padding"
-            android:layout_marginTop="@dimen/titleMarginTop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <!-- The FragmentContainerView used for displaying fragments in the main activity -->
         <androidx.fragment.app.FragmentContainerView
@@ -111,7 +100,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_menu"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:navGraph="@navigation/nav_graph" />
 
         <!-- ImageView for displaying an image below the toolbar -->

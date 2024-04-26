@@ -29,61 +29,75 @@
             elements -->
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                style="@style/TransparentToolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 app:contentInsetStart="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/actionBarPadding"
+                    android:paddingTop="@dimen/actionBarPadding"
+                    android:paddingStart="@dimen/actionBarPadding">
 
-                    <!-- The app title displayed on the toolbar -->
-                    <TextView
-                        android:id="@+id/title"
-                        style="@style/ActionBarTitleStyle"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/page_padding"
-                        android:gravity="start"
-                        android:textAllCaps="true"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/logo"
-                        app:layout_constraintStart_toEndOf="@+id/btnBack"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <!-- A back button icon on the toolbar for navigation -->
-                    <ImageButton
-                        android:id="@+id/btnBack"
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="@drawable/image_button_bg"
-                        android:contentDescription="@string/back_button_image"
-                        android:padding="@dimen/action_bar_image_button_icon_padding"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/left_arrow"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <!-- The app logo on the toolbar -->
-                    <ImageView
-                        android:id="@+id/logo"
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="@drawable/image_button_bg"
-                        android:contentDescription="@string/app_logo"
-                        android:padding="4dp"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/ic_launcher"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:cardCornerRadius="10dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageButton
+                                android:id="@+id/leftButton"
+                                android:layout_width="@dimen/actionBarButtonSize"
+                                android:layout_height="@dimen/actionBarButtonSize"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/link_button_background"
+                                android:importantForAccessibility="no"
+                                android:src="@drawable/left_arrow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/title"
+                                style="@style/FragmentTitleStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/menu_home"
+                                android:layout_marginLeft="@dimen/mini_horizontal_margin"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/leftButton"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageButton
+                                android:id="@+id/homeButton"
+                                android:layout_width="@dimen/actionBarButtonSize"
+                                android:layout_height="@dimen/actionBarButtonSize"
+                                android:layout_alignParentEnd="true"
+                                android:adjustViewBounds="true"
+                                android:background="@drawable/link_button_background"
+                                android:scaleType="fitCenter"
+                                android:src="@mipmap/ic_launcher"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:padding="4dp"/>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.cardview.widget.CardView>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
+
+
 
             <!-- The FragmentContainerView used for displaying fragments in the main activity -->
             <androidx.fragment.app.FragmentContainerView

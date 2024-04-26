@@ -14,7 +14,7 @@
 
     /* Side Menu Dimensions */
     <dimen name="sideMenuItemPadding">15dp</dimen>
-    <dimen name="sideMenuSeparatorHeight">2dp</dimen>
+    <dimen name="sideMenuSeparatorHeight">0.7dp</dimen>
     <dimen name="sideMenuArrowWidth">50dp</dimen>
     <dimen name="sideMenuLogoWidth">80dp</dimen>
     <dimen name="sideMenuPadding">32dp</dimen>
@@ -29,7 +29,7 @@
     <dimen name="actionBarButtonSize">48dp</dimen>
     <dimen name="actionBarLogoSize">60dp</dimen>
     <dimen name="actionBarLogoBgCornerRadius">30dp</dimen>
-    <dimen name="titleMarginTop">24dp</dimen>
+    <dimen name="titleMarginTop">8dp</dimen>
 
 
 </resources>
