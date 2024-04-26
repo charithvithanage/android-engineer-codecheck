@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">GitHub Explorer</string>
     <string name="preference_file_key">Android Engineer CodeCheck Pref</string>
-
     <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
+    <string name="exit">Exit</string>
+    <string name="search_input_empty_error">Please enter value before submit</string>
 
     <!-- Fragment Labels -->
     <string name="menu_home">Home</string>
@@ -32,5 +33,7 @@
     <string name="fav_delete_icon">Favourite Delete Icon</string>
     <string name="radio_button_custom_icon">Radio Button Icon</string>
     <string name="welcome_page_bottomAvatar">Welcome Page Bottom Image</string>
-    <string name="log_out">Logout</string>
+
+
+
 </resources>

@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentInsetStart="0dp"
+            android:layout_marginTop="@dimen/vertical_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -90,6 +91,15 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
+        <TextView
+            android:id="@+id/title"
+            style="@style/FragmentTitleStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/page_padding"
+            android:layout_marginTop="@dimen/titleMarginTop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         <!-- The FragmentContainerView used for displaying fragments in the main activity -->
         <androidx.fragment.app.FragmentContainerView
@@ -101,7 +111,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bottom_navigation_menu"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toBottomOf="@+id/title"
             app:navGraph="@navigation/nav_graph" />
 
         <!-- ImageView for displaying an image below the toolbar -->

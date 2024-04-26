@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.constants.PreferenceKeys.APP_LAUNCHED_STATUS
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.FragmentWelcomeBinding
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
@@ -86,7 +88,17 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.button.setOnClickListener {
-
+            SharedPreferencesManager.savePreferenceBool(
+                APP_LAUNCHED_STATUS,
+                true
+            )
+            navigateToLoginFragment()
         }
+    }
+
+    private fun navigateToLoginFragment() {
+        findNavController().navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment()
+        )
     }
 }

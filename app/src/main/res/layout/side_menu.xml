@@ -209,7 +209,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/horizontal_margin"
-                        android:text="@string/log_out"
+                        android:text="@string/exit"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/imageView6"
                         app:layout_constraintStart_toEndOf="@+id/logoutIcon"

@@ -21,4 +21,9 @@ object StringConstants {
      * Tag for the Fragments.
      */
     const val WELCOME_FRAGMENT = "Welcome Fragment"
+
+    /**
+     * Tag for the Home Fragment.
+     */
+    const val HOME_FRAGMENT = "HOME FRAGMENT"
 }

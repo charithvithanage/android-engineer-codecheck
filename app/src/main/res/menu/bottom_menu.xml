@@ -6,7 +6,7 @@
         android:title="@string/menu_home" />
     <item
         android:id="@+id/favouritesFragment"
-        android:icon="@mipmap/favourites_icon"
+        android:icon="@mipmap/menu_fav"
         android:title="@string/menu_favourites" />
     <item
         android:id="@+id/settingsFragment"
