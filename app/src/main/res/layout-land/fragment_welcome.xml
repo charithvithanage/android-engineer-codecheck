@@ -47,14 +47,14 @@
             android:layout_marginStart="@dimen/page_padding"
             android:layout_marginTop="50dp"
             android:adjustViewBounds="true"
-            android:importantForAccessibility="no"
+            android:contentDescription="@string/app_logo"
             android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView3"
-            style="@style/landingPageTitleStyle"
+            style="@style/LandingPageTitleStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/page_padding"
@@ -66,7 +66,7 @@
 
         <TextView
             android:id="@+id/textView2"
-            style="@style/landingPageContentStyle"
+            style="@style/LandingPageContentStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/page_padding"
@@ -79,7 +79,7 @@
 
         <Button
             android:id="@+id/button"
-            style="@style/buttonStyle"
+            style="@style/ButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/page_padding"

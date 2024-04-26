@@ -23,10 +23,10 @@ object BindingAdapters {
     fun languageSelectedTextView(textView: TextView, shouldSelected: Boolean) {
         when {
             shouldSelected -> {
-                textView.setTextAppearance(R.style.languageSelectedTextStyle)
+                textView.setTextAppearance(R.style.LanguageSelectedTextStyle)
             }
             else -> {
-                textView.setTextAppearance(R.style.languageUnSelectedTextStyle)
+                textView.setTextAppearance(R.style.LanguageUnSelectedTextStyle)
             }
         }
     }

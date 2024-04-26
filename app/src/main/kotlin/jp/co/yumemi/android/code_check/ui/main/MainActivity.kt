@@ -5,7 +5,9 @@ package jp.co.yumemi.android.code_check.ui.main
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,6 +36,15 @@ class MainActivity : AppCompatActivity() {
         LanguageManager(this).loadLanguage()
         DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main).apply {
             binding = this
+
+            resources.configuration.apply {
+                // Check the initial device orientation and set the menu accordingly
+                setMenuVisibility(orientation)
+                // Check the initial night mode and set the background accordingly
+                setBackGroundImage(uiMode)
+            }
+
+
 //            setupNavController()
 //            setSupportActionBar(toolbar)
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
@@ -45,20 +56,45 @@ class MainActivity : AppCompatActivity() {
 //                onBackPressed()
 //            }
 
-            // Get the current configuration
-            // Get the current configuration
-            val currentNightMode =
-                resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        }
+    }
 
-            // Check if it's in night mode
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
 
+        // Check the new device orientation and set the menu accordingly
+        setMenuVisibility(newConfig.orientation)
+
+        // Check the new night mode and set the background accordingly
+        setBackGroundImage(newConfig.uiMode)
+    }
+
+    private fun setBackGroundImage(mode: Int) {
+        binding.mainLayout.apply {
             // Check if it's in night mode
-            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
-                // Set dark mode background image
-                mainLayout.setBackgroundResource(R.mipmap.night_bg)
-            } else {
-                // Set light mode background image
-                mainLayout.setBackgroundResource(R.mipmap.bg)
+            // Set dark mode background image
+            // Set light mode background image
+            when (mode and Configuration.UI_MODE_NIGHT_MASK) {
+                Configuration.UI_MODE_NIGHT_YES -> setBackgroundResource(
+                    R.mipmap.night_bg
+                )
+                else -> setBackgroundResource(R.mipmap.bg)
+            }
+        }
+    }
+
+    private fun setMenuVisibility(orientation: Int) {
+        when (orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> {
+                // Code to show the bottom menu
+                binding.bottomNavigationMenu.isVisible = true
+                Toast.makeText(this, "Portrait", Toast.LENGTH_SHORT).show()
+            }
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                // Code to show the side menu
+                binding.bottomNavigationMenu.isVisible = false
+                Toast.makeText(this, "Landscape", Toast.LENGTH_SHORT).show()
+
             }
         }
     }
