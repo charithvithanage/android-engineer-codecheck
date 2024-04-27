@@ -17,5 +17,15 @@
         android:id="@+id/homeFragment"
         android:name="jp.co.yumemi.android.code_check.ui.home.HomeFragment"
         tools:layout="@layout/fragment_home"
-        android:label="@string/menu_home"></fragment>
+        android:label="@string/menu_home">
+        <action
+            android:id="@+id/action_homeFragment_to_favouritesFragment"
+            app:destination="@id/favouritesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/favouritesFragment"
+        android:name="jp.co.yumemi.android.code_check.ui.favourites.FavouritesFragment"
+        tools:layout="@layout/fragment_favourites"
+        android:label="@string/menu_favourites"></fragment>
 </navigation>

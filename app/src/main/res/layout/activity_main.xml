@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="jp.co.yumemi.android.code_check.ui.main.MainActivity" />
+            type="jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel" />
 
         <import type="android.view.View" />
     </data>
@@ -31,16 +31,16 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/actionBarPadding"
+                android:paddingStart="@dimen/actionBarPadding"
                 android:paddingTop="@dimen/actionBarPadding"
-                android:paddingStart="@dimen/actionBarPadding">
+                android:paddingEnd="@dimen/actionBarPadding">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="10dp"
                     android:layout_marginTop="@dimen/vertical_margin"
+                    app:cardCornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -66,8 +66,7 @@
                             style="@style/FragmentTitleStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/menu_home"
-                            android:layout_marginLeft="@dimen/mini_horizontal_margin"
+                            android:layout_marginStart="@dimen/horizontal_margin"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/leftButton"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -79,12 +78,13 @@
                             android:layout_alignParentEnd="true"
                             android:adjustViewBounds="true"
                             android:background="@drawable/link_button_background"
+                            android:importantForAccessibility="no"
+                            android:padding="4dp"
                             android:scaleType="fitCenter"
                             android:src="@mipmap/ic_launcher"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:padding="4dp"/>
+                            app:layout_constraintTop_toTopOf="parent" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,5 +25,10 @@ object StringConstants {
     /**
      * Tag for the Home Fragment.
      */
-    const val HOME_FRAGMENT = "HOME FRAGMENT"
+    const val HOME_FRAGMENT = "Home Fragment"
+
+    /**
+     * Tag for the Favorites Fragment.
+     */
+    const val FAVOURITE_FRAGMENT = "Favourites Fragment"
 }

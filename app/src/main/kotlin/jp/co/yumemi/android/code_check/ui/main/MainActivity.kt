@@ -4,14 +4,22 @@
 package jp.co.yumemi.android.code_check.ui.main
 
 import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
+import android.content.res.Configuration.ORIENTATION_SQUARE
+import android.content.res.Configuration.ORIENTATION_UNDEFINED
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
@@ -34,11 +42,15 @@ import jp.co.yumemi.android.code_check.utils.LanguageManager
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedViewModel: MainActivityViewModel
     private lateinit var binding: ActivityMainBinding
+    private lateinit var bottomNavView: BottomNavigationView
+    private lateinit var menu: Menu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageManager(this).loadLanguage()
         DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main).apply {
             binding = this
+            setupNavController()
 
             resources.configuration.apply {
                 // Check the initial device orientation and set the menu accordingly
@@ -49,12 +61,32 @@ class MainActivity : AppCompatActivity() {
 
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
                 sharedViewModel = this
+                vm = this
             }
 
             viewModelObservers()
         }
     }
 
+    /**
+     * Set up the navigation controller for the bottom navigation menu.
+     */
+    private fun setupNavController() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        navHostFragment.navController.let { navController ->
+
+            if (binding.bottomNavigationMenu != null) {
+                binding.bottomNavigationMenu!!.apply {
+                    bottomNavView = this
+                    this@MainActivity.menu = this.menu
+                    setupWithNavController(navController)
+                }
+            }
+
+        }
+    }
 
     /**
      * Observers for LiveData changes in the shared view model.
@@ -80,13 +112,46 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.HOME_FRAGMENT -> {
+                            sharedViewModel.setFragmentName(getString(R.string.menu_home))
                             toolbar.isVisible = true
                             title.isVisible = true
                             bottomNavigationMenu?.isVisible = true
                             drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
 
+                            when (resources.configuration.orientation) {
+                                ORIENTATION_PORTRAIT -> {
+                                    leftButton.isVisible = false
+                                }
+
+                                ORIENTATION_LANDSCAPE -> {
+                                    leftButton.isVisible = true
+                                    leftButton.setBackgroundResource(R.drawable.hamburger)
+                                }
+
+                                ORIENTATION_SQUARE -> {
+                                    leftButton.isVisible = false
+                                }
+
+                                ORIENTATION_UNDEFINED -> {
+                                    leftButton.isVisible = false
+                                }
+                            }
+
+
+                        }
+
+                        StringConstants.FAVOURITE_FRAGMENT -> {
+                            sharedViewModel.setFragmentName(getString(R.string.menu_favourites))
                         }
                     }
+                }
+
+                /**
+                 * Observe changes in a LiveData and update the action bar title of the MainActivity accordingly.
+                 * Set live data value when the navigate through fragments
+                 */
+                fragmentName.observe(this@MainActivity) {
+                    title.text = it
                 }
             }
 
@@ -139,7 +204,7 @@ class MainActivity : AppCompatActivity() {
                 // Code to show the side menu
 //                binding.bottomNavigationMenu.isVisible = false
 //                binding.drawerSideMenu.isVisible = true
-//                Toast.makeText(this, "Landscape", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Landscape", Toast.LENGTH_SHORT).show()
             }
         }
     }

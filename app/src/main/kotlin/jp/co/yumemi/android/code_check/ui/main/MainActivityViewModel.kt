@@ -21,6 +21,10 @@ class MainActivityViewModel @Inject constructor() :
     private val _fragment = MutableLiveData(WELCOME_FRAGMENT)
     val fragment get() = _fragment
 
+    private val _fragmentName = MutableLiveData("")
+    val fragmentName get() = _fragmentName
+
+
     /**
      * Sets the currently displayed fragment.
      *
@@ -28,5 +32,12 @@ class MainActivityViewModel @Inject constructor() :
      */
     fun setFragment(fragment: String) {
         _fragment.value = fragment
+    }
+
+    /**
+     * @param fragmentName The name of the fragment.
+     */
+    fun setFragmentName(fragmentName: String) {
+        _fragmentName.value = fragmentName
     }
 }
