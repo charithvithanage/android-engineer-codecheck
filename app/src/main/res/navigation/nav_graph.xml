@@ -30,11 +30,11 @@
         android:id="@+id/favouritesFragment"
         android:name="jp.co.yumemi.android.code_check.ui.favourites.FavouritesFragment"
         android:label="@string/menu_favourites"
-        tools:layout="@layout/fragment_favourites"></fragment>
+        tools:layout="@layout/fragment_favourites"/>
 
     <fragment
         android:id="@+id/settingsFragment"
         android:name="jp.co.yumemi.android.code_check.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings"></fragment>
+        tools:layout="@layout/fragment_settings"/>
 </navigation>

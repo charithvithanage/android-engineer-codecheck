@@ -13,10 +13,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -44,12 +46,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var menu: Menu
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageManager(this).loadLanguage()
         DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main).apply {
             binding = this
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            navController = navHostFragment.navController
             setupNavController()
 
             resources.configuration.apply {
@@ -62,6 +68,40 @@ class MainActivity : AppCompatActivity() {
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
                 sharedViewModel = this
                 vm = this
+            }
+
+            drawerSideMenu?.let {
+                it.apply {
+                    drawerLayout?.apply {
+                        closeBtn.setOnClickListener {
+                            closeDrawer(GravityCompat.START)
+                        }
+
+                        homeButtonLayout.setOnClickListener {
+                            closeDrawer(GravityCompat.START)
+                        }
+
+                        favButtonLayout.setOnClickListener {
+                            closeDrawer(GravityCompat.START)
+                        }
+
+                        settingsButtonLayout.setOnClickListener {
+                            closeDrawer(GravityCompat.START)
+                        }
+
+                        logoutButtonLayout.setOnClickListener {
+                            closeDrawer(GravityCompat.START)
+                        }
+
+                        leftButton.setOnClickListener {
+                            if (sharedViewModel.showHamburgerMenu.value == true) {
+                                openDrawer(GravityCompat.START)
+                            } else {
+                                navController.popBackStack()
+                            }
+                        }
+                    }
+                }
             }
 
             viewModelObservers()
@@ -101,6 +141,7 @@ class MainActivity : AppCompatActivity() {
 
             binding.apply {
                 fragment.observe(this@MainActivity) {
+                    showHamburgerMenu(true)
                     // Set the title text based on the observed fragment
                     when (it) {
                         StringConstants.WELCOME_FRAGMENT -> {
@@ -145,7 +186,18 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationMenu?.let {
                         updateMenuValues(this@MainActivity, it)
                     }
-//                    updateSideValues(this@MainActivity, binding.drawerSideMenu.root)
+                }
+
+                /**
+                 * Observes the LiveData [showHamburgerMenu] in the MainActivity and updates the visibility of the hamburger menu button accordingly.
+                 * If [isVisible] is true, the hamburger menu button is displayed; otherwise, the button displays a left arrow.
+                 */
+                showHamburgerMenu.observe(this@MainActivity) { isVisible ->
+                    if (isVisible) {
+                        binding.leftButton.setImageResource(R.drawable.hamburger)
+                    } else {
+                        binding.leftButton.setImageResource(R.drawable.left_arrow)
+                    }
                 }
 
             }
@@ -163,6 +215,12 @@ class MainActivity : AppCompatActivity() {
         setBackGroundImage(newConfig.uiMode)
     }
 
+    /**
+     * Updates the text values of menu items in the provided [bottomNavigationView] based on the current context.
+     *
+     * @param context The context used to retrieve string resources for menu item text.
+     * @param bottomNavigationView The BottomNavigationView whose menu items need to be updated.
+     */
     private fun updateMenuValues(context: Context?, bottomNavigationView: BottomNavigationView) {
         context?.let {
             bottomNavigationView.menu.let {
@@ -173,6 +231,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Sets the background image and color for the main layout based on the current UI mode.
+     *
+     * This function sets the background image and background color for the main layout
+     * depending on whether the device is in night mode or not.
+     *
+     * @param mode The UI mode to determine whether the device is in night mode or not.
+     *             Use [Configuration.UI_MODE_NIGHT_YES] for night mode and other values for day mode.
+     */
     private fun setBackGroundImage(mode: Int) {
         binding.mainLayout.apply {
             // Check if it's in night mode
@@ -184,18 +251,23 @@ class MainActivity : AppCompatActivity() {
                         R.mipmap.night_bg
                     )
 
-                    binding.drawerSideMenu?.mainLayout?.setBackgroundColor(Color.parseColor("#000000"))
+                    binding.drawerSideMenu?.sideMenuMainLayout?.setBackgroundColor(Color.parseColor("#000000"))
                 }
 
                 else -> {
                     setBackgroundResource(R.mipmap.bg)
-                    binding.drawerSideMenu?.mainLayout?.setBackgroundColor(Color.parseColor("#ffffff"))
+                    binding.drawerSideMenu?.sideMenuMainLayout?.setBackgroundColor(Color.parseColor("#ffffff"))
 
                 }
             }
         }
     }
 
+    /**
+     * Sets the visibility and image resource of the left button based on the device orientation.
+     *
+     * @param orientation The device orientation as an integer value (ORIENTATION_PORTRAIT, ORIENTATION_LANDSCAPE, ORIENTATION_SQUARE, ORIENTATION_UNDEFINED).
+     */
     private fun setMenuVisibility(orientation: Int) {
         binding.leftButton.apply {
             when (orientation) {

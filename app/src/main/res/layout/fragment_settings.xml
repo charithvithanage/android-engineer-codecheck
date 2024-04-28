@@ -38,7 +38,8 @@
                     android:layout_height="24dp"
                     android:src="@mipmap/browser"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAccessibility="no" />
 
                 <TextView
                     android:id="@+id/textView14"

@@ -4,7 +4,6 @@ package jp.co.yumemi.android.code_check.constants
  * Object containing constant strings used throughout the application.
  */
 object StringConstants {
-    const val TAG = "Android Engineer CodeCheck"
 
     // App Languages
     /**

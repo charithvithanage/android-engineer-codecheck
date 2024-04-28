@@ -45,7 +45,8 @@ class SettingsViewModel @Inject constructor(
     /**
      * Sets the label associated with the selected language.
      *
-     * @param label The label to be associated with the selected language.
+     * @param titleLabel The label to be associated with the selected language.
+     * @param languageLabel The label to be associated with the selected button text.
      */
     fun setSelectedLanguageLabels(
         titleLabel: String?,

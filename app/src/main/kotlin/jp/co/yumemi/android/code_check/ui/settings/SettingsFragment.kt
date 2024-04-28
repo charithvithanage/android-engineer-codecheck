@@ -82,7 +82,6 @@ class SettingsFragment : Fragment() {
 
                 sharedViewModel.apply {
                     setFragmentName(getString(R.string.menu_settings))
-                    setUpdateLabels(true)
                 }
 
             }
