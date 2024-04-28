@@ -1,8 +1,17 @@
 <resources>
     <string name="app_name">GitHub Explorer</string>
     <string name="preference_file_key">Android Engineer CodeCheck Pref</string>
-
     <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
+    <string name="exit">出</string>
+    <string name="search_input_empty_error">送信する前に値を入力してください</string>
+
+    <!-- Fragment Labels -->
+    <string name="menu_home">家</string>
+    <string name="menu_favourites">お気に入り</string>
+    <string name="menu_settings">設定</string>
+    <string name="details">詳細</string>
+    <string name="select_app_language">アプリの言語</string>
+    <string name="web_profile_view_details">ウェブプロフィール</string>
 
     //TextView Labels
     <string name="welcomePageContent">GitHub Explorer を使って、これまでにないほどの GitHub の世界を探検しましょう。GitHub Explorer は、お気に入りの GitHub アカウントを見つけたり、管理したり、つながったりするためのすべてがひとつになったお供です。</string>
@@ -12,4 +21,18 @@
     <string name="welcomePageTitle">GitHub Explorerへようこそ！</string>
     <string name="english">English</string>
     <string name="japanese">日本語</string>
+
+    <!-- 画像コンテンツの説明 -->
+    <string name="app_logo">アプリのロゴ</string>
+    <string name="default_image_for_list">リサイクルビューのデフォルト画像</string>
+    <string name="back_button_image">アクションバーの戻るボタン画像</string>
+    <string name="alert_dialog_image">アラートダイアログのアイコン</string>
+    <string name="progress_dialog_image">進行中ダイアログのアイコン</string>
+    <string name="favourite_button_image">お気に入りボタンのアイコン</string>
+    <string name="forward_arrow_icon">進む矢印のアイコン</string>
+    <string name="fav_delete_icon">お気に入り削除アイコン</string>
+    <string name="radio_button_custom_icon">ラジオボタンのアイコン</string>
+    <string name="welcome_page_bottomAvatar">ウェルカムページ下部の画像</string>
+
+
 </resources>
