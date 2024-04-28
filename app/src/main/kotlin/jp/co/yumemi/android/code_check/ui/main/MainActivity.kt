@@ -11,7 +11,6 @@ import android.content.res.Configuration.ORIENTATION_UNDEFINED
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
@@ -97,7 +96,6 @@ class MainActivity : AppCompatActivity() {
              * Observes changes in the sharedViewModel's fragment LiveData and updates the UI elements
              * in the MainActivity accordingly.
              *
-             * @param fragment The LiveData that represents the current fragment.
              */
 
             binding.apply {
@@ -117,27 +115,6 @@ class MainActivity : AppCompatActivity() {
                             title.isVisible = true
                             bottomNavigationMenu?.isVisible = true
                             drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-
-                            when (resources.configuration.orientation) {
-                                ORIENTATION_PORTRAIT -> {
-                                    leftButton.isVisible = false
-                                }
-
-                                ORIENTATION_LANDSCAPE -> {
-                                    leftButton.isVisible = true
-                                    leftButton.setBackgroundResource(R.drawable.hamburger)
-                                }
-
-                                ORIENTATION_SQUARE -> {
-                                    leftButton.isVisible = false
-                                }
-
-                                ORIENTATION_UNDEFINED -> {
-                                    leftButton.isVisible = false
-                                }
-                            }
-
-
                         }
 
                         StringConstants.FAVOURITE_FRAGMENT -> {
@@ -166,6 +143,8 @@ class MainActivity : AppCompatActivity() {
 
         // Check the new night mode and set the background accordingly
         setBackGroundImage(newConfig.uiMode)
+
+
     }
 
     private fun setBackGroundImage(mode: Int) {
@@ -192,19 +171,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setMenuVisibility(orientation: Int) {
-        when (orientation) {
-            Configuration.ORIENTATION_PORTRAIT -> {
-                // Code to show the bottom menu
-//                binding.bottomNavigationMenu.isVisible = true
-//                binding.drawerSideMenu.isVisible = false
-                Toast.makeText(this, "Portrait", Toast.LENGTH_SHORT).show()
-            }
+        binding.leftButton.apply {
+            when (orientation) {
+                ORIENTATION_PORTRAIT -> {
+                    isVisible = false
+                }
 
-            Configuration.ORIENTATION_LANDSCAPE -> {
-                // Code to show the side menu
-//                binding.bottomNavigationMenu.isVisible = false
-//                binding.drawerSideMenu.isVisible = true
-                Toast.makeText(this, "Landscape", Toast.LENGTH_SHORT).show()
+                ORIENTATION_LANDSCAPE -> {
+                    isVisible = true
+                    setImageResource(R.drawable.hamburger)
+                }
+
+                ORIENTATION_SQUARE -> {
+                    isVisible = false
+                }
+
+                ORIENTATION_UNDEFINED -> {
+                    isVisible = false
+                }
             }
         }
     }

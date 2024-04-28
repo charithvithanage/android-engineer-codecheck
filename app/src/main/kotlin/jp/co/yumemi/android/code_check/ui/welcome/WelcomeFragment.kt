@@ -39,8 +39,21 @@ class WelcomeFragment : Fragment() {
     ): View {
         //This Shared view model is using to update Main Activity layout changes from this fragment
         ViewModelProvider(requireActivity())[MainActivityViewModel::class.java].apply {
-            sharedViewModel = this
-            setFragment(StringConstants.WELCOME_FRAGMENT)
+            SharedPreferencesManager.getPreferenceBool(APP_LAUNCHED_STATUS)
+                ?.let {
+                    if(it) {
+                        //Already launched the app
+                        navigateToHomeFragment()
+                    }else{
+                        sharedViewModel = this
+                        setFragment(StringConstants.WELCOME_FRAGMENT)
+                    }
+
+                } ?: run {
+                //If app is launched for the first time
+                sharedViewModel = this
+                setFragment(StringConstants.WELCOME_FRAGMENT)
+            }
         }
 
         FragmentWelcomeBinding.inflate(inflater, container, false).apply {
@@ -92,11 +105,11 @@ class WelcomeFragment : Fragment() {
                 APP_LAUNCHED_STATUS,
                 true
             )
-            navigateToLoginFragment()
+            navigateToHomeFragment()
         }
     }
 
-    private fun navigateToLoginFragment() {
+    private fun navigateToHomeFragment() {
         findNavController().navigate(
             WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment()
         )
