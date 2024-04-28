@@ -7,10 +7,13 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants.SETTINGS_FRAGMENT
 import jp.co.yumemi.android.code_check.databinding.FragmentSettingsBinding
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
 import jp.co.yumemi.android.code_check.utils.LanguageManager
+import jp.co.yumemi.android.code_check.utils.SharedPreferencesManager
+import jp.co.yumemi.android.code_check.utils.SharedPreferencesManager.Companion.updateSelectedLanguage
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -55,12 +58,32 @@ class SettingsFragment : Fragment() {
      * configurations.
      */
     private fun initView() {
-        // Setting the search view hint based on the localized string
+
+
         viewModel.apply {
+            //Get selected language form preference and set to live data
+            SharedPreferencesManager.getSelectedLanguage().apply {
+                setSelectedLanguage(
+                    this
+                )
+            }
+            selectedLanguage.observe(viewLifecycleOwner) {
+                // Update the selected value in the preference
+                updateSelectedLanguage(it)
+                // Set language preference
+                LanguageManager(requireContext()).loadLanguage()
+                setSelectedLanguageLabels(
+                    getString(
+                        R.string.menu_settings
+                    ), getString(
+                        R.string.change_language
+                    )
+                )
 
-            // Setting up the searchInputText's OnEditorActionListener
-            binding.apply {
-
+                sharedViewModel.apply {
+                    setFragmentName(getString(R.string.menu_settings))
+                    setUpdateLabels(true)
+                }
 
             }
         }

@@ -30,6 +30,8 @@
     <dimen name="actionBarLogoSize">60dp</dimen>
     <dimen name="actionBarLogoBgCornerRadius">30dp</dimen>
     <dimen name="titleMarginTop">8dp</dimen>
+    <dimen name="content_bg_broder_radius">10dp</dimen>
+    <dimen name="content_padding">16dp</dimen>
 
 
 </resources>

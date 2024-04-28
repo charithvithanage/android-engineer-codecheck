@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -13,14 +14,78 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/languageSection"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Settings Fragment"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="@dimen/content_margin"
+            android:layout_marginTop="@dimen/page_padding"
+            android:layout_marginEnd="@dimen/content_margin"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/content_bg_broder_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/content_padding">
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/browser"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    style="@style/ContentLabelStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/horizontal_margin"
+                    android:text="@{vm.languageLabel}"
+                    app:layout_constraintStart_toEndOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="18dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14">
+
+                    <Button
+                        android:id="@+id/japaneseBtn"
+                        style="@style/GrayButtonStyle"
+                        bind:itemBackground='@{vm.shouldSelectJapanese}'
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> vm.onJapaneseLayoutClicked()}"
+                        android:text="@string/japanese"
+                        android:textAllCaps="false" />
+
+                    <Button
+                        android:id="@+id/englishBtn"
+                        style="@style/GrayButtonStyle"
+                        bind:itemBackground='@{vm.shouldSelectEnglish}'
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/horizontal_margin"
+                        android:layout_weight="1"
+                        android:onClick="@{() -> vm.onEnglishLayoutClicked()}"
+                        android:text="@string/english" />
+                </LinearLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

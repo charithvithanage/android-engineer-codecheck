@@ -3,6 +3,7 @@
  */
 package jp.co.yumemi.android.code_check.ui.main
 
+import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
@@ -134,6 +135,19 @@ class MainActivity : AppCompatActivity() {
                 fragmentName.observe(this@MainActivity) {
                     title.text = it
                 }
+
+                /**
+                 * Observe changes in a LiveData and update the bottom menu of the MainActivity accordingly.
+                 *
+                 * @param @MainActivity The current MainActivity instance where this code is executed.
+                 */
+                updateLabels.observe(this@MainActivity) {
+                    binding.bottomNavigationMenu?.let {
+                        updateMenuValues(this@MainActivity, it)
+                    }
+//                    updateSideValues(this@MainActivity, binding.drawerSideMenu.root)
+                }
+
             }
 
         }
@@ -147,8 +161,16 @@ class MainActivity : AppCompatActivity() {
 
         // Check the new night mode and set the background accordingly
         setBackGroundImage(newConfig.uiMode)
+    }
 
-
+    private fun updateMenuValues(context: Context?, bottomNavigationView: BottomNavigationView) {
+        context?.let {
+            bottomNavigationView.menu.let {
+                it.findItem(R.id.homeFragment).title = getString(R.string.menu_home)
+                it.findItem(R.id.favouritesFragment).title = getString(R.string.menu_favourites)
+                it.findItem(R.id.settingsFragment).title = getString(R.string.menu_settings)
+            }
+        }
     }
 
     private fun setBackGroundImage(mode: Int) {

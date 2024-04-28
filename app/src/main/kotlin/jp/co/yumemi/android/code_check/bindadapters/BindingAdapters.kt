@@ -1,5 +1,7 @@
 package jp.co.yumemi.android.code_check.bindadapters
 
+import android.graphics.Color
+import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import jp.co.yumemi.android.code_check.R
@@ -10,6 +12,28 @@ import jp.co.yumemi.android.code_check.R
  * the process of working with custom attributes defined in your XML layouts.
  */
 object BindingAdapters {
+
+    /**
+     * A Data Binding adapter for setting the background and icon of a view based on a boolean flag.
+     *
+     * @param view The View for which the background and icon should be set.
+     * @param shouldSelected A boolean flag indicating if the view should be selected.
+     */
+    @BindingAdapter("itemBackground")
+    @JvmStatic
+    fun setLanguageButtonBackground(view: Button, shouldSelected: Boolean) {
+        when {
+            shouldSelected -> {
+                view.setBackgroundResource(R.drawable.button_background)
+                view.setTextColor(Color.parseColor("#FFFFFF"))
+            }
+
+            else -> {
+                view.setBackgroundResource(R.drawable.grey_button_background)
+                view.setTextColor(Color.parseColor("#000000"))
+            }
+        }
+    }
 
     /**
      * Sets the text appearance of a TextView based on whether it should be selected or not.
