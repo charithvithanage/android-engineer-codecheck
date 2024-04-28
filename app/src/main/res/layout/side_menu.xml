@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainLayout"
+        android:id="@+id/sideMenuMainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
@@ -60,7 +60,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/homeButtonLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"                    >
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/link_button_background">
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -103,7 +104,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/favButtonLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/link_button_background">
 
                     <ImageView
                         android:id="@+id/favMenuIcon"
@@ -146,7 +148,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/settingsButtonLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/link_button_background">
 
                     <ImageView
                         android:id="@+id/settingsIcon"
@@ -189,7 +192,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/logoutButtonLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/link_button_background">
 
                     <ImageView
                         android:id="@+id/logoutIcon"
