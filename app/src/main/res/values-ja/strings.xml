@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">GitHub Explorer</string>
+    <string name="preference_file_key">Android Engineer CodeCheck Pref</string>
+
+    <string name="searchInputText_hint">GitHub のリポジトリを検索できるよー</string>
+
+    //TextView Labels
+    <string name="welcomePageContent">GitHub Explorer を使って、これまでにないほどの GitHub の世界を探検しましょう。GitHub Explorer は、お気に入りの GitHub アカウントを見つけたり、管理したり、つながったりするためのすべてがひとつになったお供です。</string>
+
+    //Button Labels
+    <string name="next">次</string>
+    <string name="welcomePageTitle">GitHub Explorerへようこそ！</string>
+    <string name="english">English</string>
+    <string name="japanese">日本語</string>
+</resources>
