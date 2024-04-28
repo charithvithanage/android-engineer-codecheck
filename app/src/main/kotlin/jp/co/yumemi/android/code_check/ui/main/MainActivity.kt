@@ -26,6 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
+import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
 import jp.co.yumemi.android.code_check.utils.LanguageManager
 
 
@@ -184,7 +185,11 @@ class MainActivity : AppCompatActivity() {
                  */
                 updateLabels.observe(this@MainActivity) {
                     binding.bottomNavigationMenu?.let {
-                        updateMenuValues(this@MainActivity, it)
+                        updateBottomMenuValues(this@MainActivity, it)
+                    }
+
+                    binding.drawerSideMenu?.let {
+                        updateSideMenuValues(this@MainActivity, it)
                     }
                 }
 
@@ -205,14 +210,26 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-
-        // Check the new device orientation and set the menu accordingly
-        setMenuVisibility(newConfig.orientation)
-
-        // Check the new night mode and set the background accordingly
-        setBackGroundImage(newConfig.uiMode)
+    /**
+     * Updates the text labels of the side menu based on the current locale.
+     *
+     * This function retrieves localized strings for menu items such as Home, Favourites, Settings, and Exit,
+     * and applies them to the respective TextViews in the side menu. This ensures that the side menu
+     * displays the correct labels according to the current language settings.
+     *
+     * @param context The context used to access resources, necessary for retrieving localized strings.
+     * @param sideMenuBinding The binding object for the side menu layout, which provides direct access
+     *                        to the TextViews that need updating.
+     */
+    private fun updateSideMenuValues(context: Context?, sideMenuBinding:  SideMenuBinding) {
+        context?.let {
+         sideMenuBinding.apply {
+             homeLabel.text = getString(R.string.menu_home)
+             favMenuLabel.text = getString(R.string.menu_favourites)
+             settingsLabel.text = getString(R.string.menu_settings)
+             logoutLabel.text = getString(R.string.exit)
+         }
+        }
     }
 
     /**
@@ -221,7 +238,7 @@ class MainActivity : AppCompatActivity() {
      * @param context The context used to retrieve string resources for menu item text.
      * @param bottomNavigationView The BottomNavigationView whose menu items need to be updated.
      */
-    private fun updateMenuValues(context: Context?, bottomNavigationView: BottomNavigationView) {
+    private fun updateBottomMenuValues(context: Context?, bottomNavigationView: BottomNavigationView) {
         context?.let {
             bottomNavigationView.menu.let {
                 it.findItem(R.id.homeFragment).title = getString(R.string.menu_home)
@@ -261,6 +278,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        // Check the new device orientation and set the menu accordingly
+        setMenuVisibility(newConfig.orientation)
+
+        // Check the new night mode and set the background accordingly
+        setBackGroundImage(newConfig.uiMode)
     }
 
     /**

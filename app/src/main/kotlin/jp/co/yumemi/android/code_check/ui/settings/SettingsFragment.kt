@@ -58,8 +58,6 @@ class SettingsFragment : Fragment() {
      * configurations.
      */
     private fun initView() {
-
-
         viewModel.apply {
             //Get selected language form preference and set to live data
             SharedPreferencesManager.getSelectedLanguage().apply {
@@ -82,6 +80,7 @@ class SettingsFragment : Fragment() {
 
                 sharedViewModel.apply {
                     setFragmentName(getString(R.string.menu_settings))
+                    setUpdateLabels(true)
                 }
 
             }
