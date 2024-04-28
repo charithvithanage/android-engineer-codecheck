@@ -16,16 +16,25 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="jp.co.yumemi.android.code_check.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home"
-        android:label="@string/menu_home">
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_favouritesFragment"
             app:destination="@id/favouritesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/favouritesFragment"
         android:name="jp.co.yumemi.android.code_check.ui.favourites.FavouritesFragment"
-        tools:layout="@layout/fragment_favourites"
-        android:label="@string/menu_favourites"></fragment>
+        android:label="@string/menu_favourites"
+        tools:layout="@layout/fragment_favourites"></fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="jp.co.yumemi.android.code_check.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings"></fragment>
 </navigation>

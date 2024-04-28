@@ -31,4 +31,10 @@ object StringConstants {
      * Tag for the Favorites Fragment.
      */
     const val FAVOURITE_FRAGMENT = "Favourites Fragment"
+
+    /**
+     * Tag for the Settings Fragment.
+     */
+    const val SETTINGS_FRAGMENT = "Settings Fragment"
+
 }

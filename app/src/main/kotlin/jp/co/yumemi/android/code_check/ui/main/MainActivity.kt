@@ -120,6 +120,10 @@ class MainActivity : AppCompatActivity() {
                         StringConstants.FAVOURITE_FRAGMENT -> {
                             sharedViewModel.setFragmentName(getString(R.string.menu_favourites))
                         }
+
+                        StringConstants.SETTINGS_FRAGMENT -> {
+                            sharedViewModel.setFragmentName(getString(R.string.menu_settings))
+                        }
                     }
                 }
 
