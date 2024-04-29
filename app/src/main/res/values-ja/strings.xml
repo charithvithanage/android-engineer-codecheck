@@ -22,6 +22,7 @@
     <string name="welcomePageTitle">GitHub Explorerへようこそ！</string>
     <string name="english">English</string>
     <string name="japanese">日本語</string>
+    <string name="ok">わかりました</string>
 
     <!-- 画像コンテンツの説明 -->
     <string name="app_logo">アプリのロゴ</string>

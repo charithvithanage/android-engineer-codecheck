@@ -31,6 +31,18 @@ class MainActivityViewModel @Inject constructor() :
     private val _showHamburgerMenu = MutableLiveData(true)
     val showHamburgerMenu get() = _showHamburgerMenu
 
+    //Success Message Dialog Visibility Live Data
+    private val _successMessage = MutableLiveData<String?>()
+    val successMessage get() = _successMessage
+
+    //Warn Message Dialog Visibility Live Data
+    private val _warnMessage = MutableLiveData<String?>()
+    val warnMessage get() = _warnMessage
+
+    //Error Message Dialog Visibility Live Data
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage get() = _errorMessage
+
     /**
      * Sets the currently displayed fragment.
      *
@@ -63,5 +75,32 @@ class MainActivityViewModel @Inject constructor() :
      */
     fun showHamburgerMenu(showStatus: Boolean) {
         _showHamburgerMenu.value = showStatus
+    }
+
+    /**
+     * Shows a success dialog with the provided message.
+     *
+     * @param successMessage The message to display in the success dialog.
+     */
+    fun showSuccessDialog(successMessage: String?) {
+        _successMessage.value = successMessage
+    }
+
+    /**
+     * Shows a warning dialog with the provided message.
+     *
+     * @param warnMessage The message to display in the warning dialog.
+     */
+    fun showWarnDialog(warnMessage: String?) {
+        _warnMessage.value = warnMessage
+    }
+
+    /**
+     * Shows an error dialog with the provided message.
+     *
+     * @param errorMessage The message to display in the error dialog.
+     */
+    fun showErrorDialog(errorMessage: String?) {
+        _errorMessage.value = errorMessage
     }
 }

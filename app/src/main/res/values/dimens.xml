@@ -12,6 +12,11 @@
     <dimen name="action_bar_image_button_icon_padding">12dp</dimen>
     <dimen name="search_view_horizontal_margin">24dp</dimen>
 
+    /* Dialog View Dimensions */
+    <dimen name="dialog_horizontal_padding">16dp</dimen>
+    <dimen name="dialog_top_padding">40dp</dimen>
+    <dimen name="dialog_icon_size">100dp</dimen>
+
     /* Side Menu Dimensions */
     <dimen name="sideMenuItemPadding">15dp</dimen>
     <dimen name="sideMenuSeparatorHeight">0.7dp</dimen>
