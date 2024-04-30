@@ -42,7 +42,6 @@ class HomeViewModel @Inject constructor(
      * This function fetches GitHub repository data based on the provided [inputText] and updates the
      * [_gitHubRepoList] LiveData with the retrieved data. It also handles errors by updating the
      * [_errorMessage] LiveData. Additionally, it manages the visibility of a progress dialog with the
-     * [_isDialogVisible] LiveData.
      *
      * @param inputText The text entered by the user for repository search.
      */

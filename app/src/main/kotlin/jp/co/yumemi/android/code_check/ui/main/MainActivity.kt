@@ -27,7 +27,6 @@ import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
-import jp.co.yumemi.android.code_check.utils.DialogUtils
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
