@@ -27,10 +27,12 @@ import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
+import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialogWithoutAction
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showConfirmAlertDialog
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showProgressDialog
 import jp.co.yumemi.android.code_check.utils.LanguageManager
 
@@ -102,6 +104,7 @@ class MainActivity : AppCompatActivity() {
 
                         logoutButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            sharedViewModel.setExitConfirmationDialogVisible(true)
                         }
 
                         leftButton.setOnClickListener {
@@ -260,11 +263,14 @@ class MainActivity : AppCompatActivity() {
                  * @param @MainActivity The current MainActivity instance where this code is executed.
                  */
                 updateLabels.observe(this@MainActivity) {
-                    binding.bottomNavigationMenu?.let {
-                        updateBottomMenuValues(this@MainActivity, it)
+                    bottomNavigationMenu?.menu?.let {
+                        it.findItem(R.id.exitMenu).setOnMenuItemClickListener {
+                            sharedViewModel.setExitConfirmationDialogVisible(true)
+                            true
+                        }
                     }
 
-                    binding.drawerSideMenu?.let {
+                    drawerSideMenu?.let {
                         updateSideMenuValues(this@MainActivity, it)
                     }
                 }
@@ -275,14 +281,28 @@ class MainActivity : AppCompatActivity() {
                  */
                 showHamburgerMenu.observe(this@MainActivity) { isVisible ->
                     if (isVisible) {
-                        binding.leftButton.setImageResource(R.drawable.hamburger)
+                        leftButton.setImageResource(R.drawable.hamburger)
                     } else {
-                        binding.leftButton.setImageResource(R.drawable.left_arrow)
+                        leftButton.setImageResource(R.drawable.left_arrow)
                     }
                 }
 
-            }
+                existConfirmationDialogVisible.observe(this@MainActivity) { isVisible ->
+                    if (isVisible) {
+                        showConfirmAlertDialog(this@MainActivity,
+                            getString(R.string.exit_confirmation_message),
+                            object : ConfirmDialogButtonClickListener {
+                                override fun onPositiveButtonClick() {
+                                    finish()
+                                }
 
+                                override fun onNegativeButtonClick() {
+                                }
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -304,25 +324,6 @@ class MainActivity : AppCompatActivity() {
                 favMenuLabel.text = getString(R.string.menu_favourites)
                 settingsLabel.text = getString(R.string.menu_settings)
                 logoutLabel.text = getString(R.string.exit)
-            }
-        }
-    }
-
-    /**
-     * Updates the text values of menu items in the provided [bottomNavigationView] based on the current context.
-     *
-     * @param context The context used to retrieve string resources for menu item text.
-     * @param bottomNavigationView The BottomNavigationView whose menu items need to be updated.
-     */
-    private fun updateBottomMenuValues(
-        context: Context?,
-        bottomNavigationView: BottomNavigationView
-    ) {
-        context?.let {
-            bottomNavigationView.menu.let {
-                it.findItem(R.id.homeFragment).title = getString(R.string.menu_home)
-                it.findItem(R.id.favouritesFragment).title = getString(R.string.menu_favourites)
-                it.findItem(R.id.settingsFragment).title = getString(R.string.menu_settings)
             }
         }
     }

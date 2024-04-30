@@ -47,6 +47,9 @@ class MainActivityViewModel @Inject constructor() :
     private val _isProgressDialogVisible = MutableLiveData<Boolean>()
     val isProgressDialogVisible get() = _isProgressDialogVisible
 
+    private val _existConfirmationDialogVisible = MutableLiveData<Boolean>()
+    val existConfirmationDialogVisible get() = _existConfirmationDialogVisible
+
     /**
      * Sets the currently displayed fragment.
      *
@@ -117,6 +120,10 @@ class MainActivityViewModel @Inject constructor() :
      */
     fun setProgressDialogVisible(showStatus: Boolean) {
         _isProgressDialogVisible.value = showStatus
+    }
+
+    fun setExitConfirmationDialogVisible(showStatus: Boolean) {
+        _existConfirmationDialogVisible.value = showStatus
     }
 
 }

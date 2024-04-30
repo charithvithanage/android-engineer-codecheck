@@ -18,6 +18,7 @@
     <string name="change_language">言語を変更</string>
     <string name="welcomePageContent">GitHub Explorer を使って、これまでにないほどの GitHub の世界を探検しましょう。GitHub Explorer は、お気に入りの GitHub アカウントを見つけたり、管理したり、つながったりするためのすべてがひとつになったお供です。</string>
     <string name="progressing">進行中.....</string>
+    <string name="exit_confirmation_message">退出しますか?</string>
 
     //Button Labels
     <string name="next">次</string>
@@ -25,6 +26,8 @@
     <string name="english">English</string>
     <string name="japanese">日本語</string>
     <string name="ok">わかりました</string>
+    <string name="no">いいえ</string>
+    <string name="yes">はい</string>
 
     <!-- 画像コンテンツの説明 -->
     <string name="app_logo">アプリのロゴ</string>

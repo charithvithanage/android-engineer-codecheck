@@ -101,6 +101,7 @@ class HomeFragment : Fragment() {
                                             setProgressDialogVisible(true)
                                             getGitHubRepoList(enteredValue)
                                         }
+
                                         else ->
                                             showErrorDialog(getString(R.string.network_error))
                                     }
@@ -133,7 +134,7 @@ class HomeFragment : Fragment() {
         // Handle back button press for Home Fragment
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
+                sharedViewModel.setExitConfirmationDialogVisible(true)
             }
         }.apply {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)

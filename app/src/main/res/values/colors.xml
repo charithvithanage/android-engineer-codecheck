@@ -17,5 +17,6 @@
     <color name="bottom_nav_item_unselected">#000000</color>
     <color name="bottom_menu_bg_color">#FFFFFF</color>
     <color name="side_menu_bg_color">#FFFFFF</color>
+    <color name="dialog_bg_color">#FFFFFF</color>
 
 </resources>
