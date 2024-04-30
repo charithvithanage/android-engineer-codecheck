@@ -24,7 +24,8 @@
             android:id="@+id/mainLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.activities.MainActivity">
+            tools:context=".ui.activities.MainActivity"
+            android:background="@mipmap/bg">
             <!-- The toolbar at the top of the activity, which may contain the app title and navigation
             elements -->
             <androidx.appcompat.widget.Toolbar

@@ -18,16 +18,17 @@
     <dimen name="dialog_icon_size">100dp</dimen>
 
     /* Side Menu Dimensions */
-    <dimen name="sideMenuItemPadding">15dp</dimen>
+    <dimen name="sideMenuItemPadding">8dp</dimen>
     <dimen name="sideMenuSeparatorHeight">0.7dp</dimen>
-    <dimen name="sideMenuArrowWidth">50dp</dimen>
-    <dimen name="sideMenuLogoWidth">80dp</dimen>
+    <dimen name="sideMenuArrowWidth">40dp</dimen>
+    <dimen name="sideMenuLogoWidth">60dp</dimen>
     <dimen name="sideMenuPadding">32dp</dimen>
     <dimen name="sideMenuCloseIconMargin">32dp</dimen>
     <dimen name="sideMenuCloseIconHeight">40dp</dimen>
     <dimen name="sideMenuWidth">300dp</dimen>
     <dimen name="sideMenuIconHeight">25dp</dimen>
     <dimen name="sideMenuLogoutIconHeight">40dp</dimen>
+    <dimen name="sideMenuIconPadding">2dp</dimen>
 
     /* Action Bar Dimensions */
     <dimen name="actionBarPadding">20dp</dimen>

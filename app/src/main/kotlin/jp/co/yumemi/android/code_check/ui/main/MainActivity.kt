@@ -9,7 +9,6 @@ import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.content.res.Configuration.ORIENTATION_SQUARE
 import android.content.res.Configuration.ORIENTATION_UNDEFINED
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -70,8 +69,6 @@ class MainActivity : AppCompatActivity() {
             resources.configuration.apply {
                 // Check the initial device orientation and set the menu accordingly
                 setMenuVisibility(orientation)
-                // Check the initial night mode and set the background accordingly
-                setBackGroundImage(uiMode)
             }
 
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
@@ -84,18 +81,23 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout?.apply {
                         closeBtn.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+
                         }
 
                         homeButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            navController.navigate(R.id.homeFragment)
                         }
 
                         favButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            navController.navigate(R.id.favouritesFragment)
+
                         }
 
                         settingsButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            navController.navigate(R.id.settingsFragment)
                         }
 
                         logoutButtonLayout.setOnClickListener {
@@ -325,54 +327,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Sets the background image and color for the main layout based on the current UI mode.
-     *
-     * This function sets the background image and background color for the main layout
-     * depending on whether the device is in night mode or not.
-     *
-     * @param mode The UI mode to determine whether the device is in night mode or not.
-     *             Use [Configuration.UI_MODE_NIGHT_YES] for night mode and other values for day mode.
-     */
-    private fun setBackGroundImage(mode: Int) {
-        binding.mainLayout.apply {
-            // Check if it's in night mode
-            // Set dark mode background image
-            // Set light mode background image
-            when (mode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    setBackgroundResource(
-                        R.mipmap.night_bg
-                    )
-
-                    binding.drawerSideMenu?.sideMenuMainLayout?.setBackgroundColor(
-                        Color.parseColor(
-                            "#000000"
-                        )
-                    )
-                }
-
-                else -> {
-                    setBackgroundResource(R.mipmap.bg)
-                    binding.drawerSideMenu?.sideMenuMainLayout?.setBackgroundColor(
-                        Color.parseColor(
-                            "#ffffff"
-                        )
-                    )
-
-                }
-            }
-        }
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
         // Check the new device orientation and set the menu accordingly
         setMenuVisibility(newConfig.orientation)
-
-        // Check the new night mode and set the background accordingly
-        setBackGroundImage(newConfig.uiMode)
     }
 
     /**

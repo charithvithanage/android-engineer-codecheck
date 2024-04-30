@@ -16,7 +16,8 @@
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activities.MainActivity">
+        tools:context=".ui.activities.MainActivity"
+        android:background="@mipmap/bg">
         <!-- The toolbar at the top of the activity, which may contain the app title and navigation
         elements -->
         <androidx.appcompat.widget.Toolbar
@@ -37,11 +38,11 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView"
+                    style="@style/CardViewBGStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/vertical_margin"
                     app:cardCornerRadius="10dp"
-                    style="@style/CardViewBGStyle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -122,6 +123,9 @@
             android:id="@+id/bottom_navigation_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/bottom_menu_bg_color"
+            app:itemIconTint="@color/bottom_nav_item_color"
+            app:itemTextColor="@color/bottom_nav_item_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

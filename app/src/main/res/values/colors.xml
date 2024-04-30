@@ -13,4 +13,9 @@
     <color name="gray">#B8B8B8</color>
     <color name="white">#FFFFFFFF</color>
     <color name="menu_item_separator_color">#613C0A78</color>
+
+    <color name="bottom_nav_item_unselected">#000000</color>
+    <color name="bottom_menu_bg_color">#FFFFFF</color>
+    <color name="side_menu_bg_color">#FFFFFF</color>
+
 </resources>
