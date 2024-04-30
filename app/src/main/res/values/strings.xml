@@ -13,10 +13,11 @@
     <string name="details">Details</string>
     <string name="web_profile_view_details">Web Profile</string>
     <string name="select_app_language">App Language</string>
-    <string name="change_language">Change Language</string>
 
     //TextView Labels
+    <string name="change_language">Change Language</string>
     <string name="welcomePageContent">Explore the world of GitHub like never before with GitHub Explorer, your all-in-one companion for discovering, managing, and staying connected with your favorite GitHub accounts.</string>
+    <string name="progressing">Progressing.....</string>
 
     //Button Labels
     <string name="next">Next</string>
@@ -36,7 +37,6 @@
     <string name="fav_delete_icon">Favourite Delete Icon</string>
     <string name="radio_button_custom_icon">Radio Button Icon</string>
     <string name="welcome_page_bottomAvatar">Welcome Page Bottom Image</string>
-
 
 
 </resources>

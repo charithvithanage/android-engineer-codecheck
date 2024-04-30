@@ -16,6 +16,7 @@
     //TextView Labels
     <string name="change_language">言語を変更</string>
     <string name="welcomePageContent">GitHub Explorer を使って、これまでにないほどの GitHub の世界を探検しましょう。GitHub Explorer は、お気に入りの GitHub アカウントを見つけたり、管理したり、つながったりするためのすべてがひとつになったお供です。</string>
+    <string name="progressing">進行中.....</string>
 
     //Button Labels
     <string name="next">次</string>

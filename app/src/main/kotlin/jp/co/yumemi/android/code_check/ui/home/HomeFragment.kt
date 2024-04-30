@@ -98,8 +98,10 @@ class HomeFragment : Fragment() {
                                 enteredValue.isNullOrEmpty() ->
                                     sharedViewModel.showErrorDialog(getString(R.string.search_input_empty_error))
 
-                                else ->
+                                else -> {
+                                    sharedViewModel.setProgressDialogVisible(true)
                                     getGitHubRepoList(enteredValue)
+                                }
                             }
                             true
                         }
@@ -142,12 +144,14 @@ class HomeFragment : Fragment() {
             // Observer to catch list data
             // Update RecyclerView Items using DiffUtils
             viewModel.gitHubRepoList.observe(requireActivity()) { repoList ->
+                setProgressDialogVisible(false)
                 repoList?.let {
                     repoListAdapter.submitList(it)
                 }
             }
 
             viewModel.errorMessage.observe(requireActivity()) { message ->
+                setProgressDialogVisible(false)
                 showErrorDialog(message)
             }
         }

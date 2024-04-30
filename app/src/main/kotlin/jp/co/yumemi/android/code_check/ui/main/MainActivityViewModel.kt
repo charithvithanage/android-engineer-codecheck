@@ -43,6 +43,10 @@ class MainActivityViewModel @Inject constructor() :
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage get() = _errorMessage
 
+    //Progress Dialog Visibility Live Data
+    private val _isProgressDialogVisible = MutableLiveData<Boolean>()
+    val isProgressDialogVisible get() = _isProgressDialogVisible
+
     /**
      * Sets the currently displayed fragment.
      *
@@ -103,4 +107,16 @@ class MainActivityViewModel @Inject constructor() :
     fun showErrorDialog(errorMessage: String?) {
         _errorMessage.value = errorMessage
     }
+
+    /**
+     * Toggles the visibility of the progress dialog.
+     *
+     * This function updates the visibility state of the progress dialog based on the provided boolean value.
+     *
+     * @param showStatus If true, the progress dialog will be shown; if false, it will be hidden.
+     */
+    fun setProgressDialogVisible(showStatus: Boolean) {
+        _isProgressDialogVisible.value = showStatus
+    }
+
 }

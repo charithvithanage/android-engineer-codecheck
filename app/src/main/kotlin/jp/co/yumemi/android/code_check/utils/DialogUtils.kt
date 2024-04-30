@@ -2,7 +2,9 @@ package jp.co.yumemi.android.code_check.utils
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import jp.co.yumemi.android.code_check.ui.customdialogs.CustomAlertDialogFragment
+import jp.co.yumemi.android.code_check.ui.customdialogs.CustomProgressDialogFragment
 
 /**
  * Utility class for managing custom dialogs in application.
@@ -34,6 +36,11 @@ class DialogUtils {
          */
         const val ALERT_DIALOG_FRAGMENT_TAG = "CustomAlertDialogFragmentTag"
 
+        /**
+         * Represents the tag for a progress dialog fragment.
+         */
+        const val PROGRESS_DIALOG_FRAGMENT_TAG = "ProgressDialogFragmentTag"
+
 
         /**
          * Show a custom alert dialog without any button click event.
@@ -52,6 +59,22 @@ class DialogUtils {
                 )
             }
         }
+
+        /**
+         * Show a progress dialog inside a fragment.
+         *
+         * @param activity The fragment in which the progress dialog should be shown.
+         * @param message The progress message to be displayed.
+         * @return The created progress dialog fragment.
+         */
+        fun showProgressDialog(context: Context, message: String?): DialogFragment? {
+            return (context as? AppCompatActivity)?.supportFragmentManager?.let { fragmentManager ->
+                CustomProgressDialogFragment.newInstance(message).apply {
+                    show(fragmentManager, PROGRESS_DIALOG_FRAGMENT_TAG)
+                }
+            }
+        }
+
 
     }
 

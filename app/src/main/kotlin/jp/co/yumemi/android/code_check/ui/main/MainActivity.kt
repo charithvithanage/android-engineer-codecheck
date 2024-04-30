@@ -33,6 +33,7 @@ import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialogWithoutAction
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showProgressDialog
 import jp.co.yumemi.android.code_check.utils.LanguageManager
 
 
@@ -183,6 +184,23 @@ class MainActivity : AppCompatActivity() {
                  */
                 fragmentName.observe(this@MainActivity) {
                     title.text = it
+                }
+
+                /* Live data observer to show/hide progress dialog */
+                isProgressDialogVisible.observe(this@MainActivity) { isVisible ->
+                    isVisible?.let { showDialog ->
+                        when {
+                            // If the showDialog == true, show the dialog else dismiss the dialog
+                            showDialog -> {
+                                dialog?.dismiss()
+                                dialog = showProgressDialog(
+                                    this@MainActivity, getString(R.string.progressing)
+                                )
+                            }
+
+                            else -> dialog?.dismiss()
+                        }
+                    }
                 }
 
                 /**
