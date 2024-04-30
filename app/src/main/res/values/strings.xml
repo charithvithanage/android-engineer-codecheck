@@ -42,5 +42,11 @@
     <string name="radio_button_custom_icon">Radio Button Icon</string>
     <string name="welcome_page_bottomAvatar">Welcome Page Bottom Image</string>
 
-
+    <!-- Details Page Resource Values -->
+    <string name="view_more">View More</string>
+    <string name="starts">Starts</string>
+    <string name="forks">Forks</string>
+    <string name="watchers">Watchers</string>
+    <string name="open_issues">Open Issues</string>
+    <string name="language">Language</string>
 </resources>

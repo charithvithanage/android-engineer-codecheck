@@ -42,4 +42,9 @@ object StringConstants {
      */
     const val SETTINGS_FRAGMENT = "Settings Fragment"
 
+    /**
+     * Tag for the Account Details Fragment.
+     */
+    const val ACCOUNT_DETAILS_FRAGMENT = "Account Details Fragment"
+
 }

@@ -12,7 +12,6 @@
     <string name="menu_settings">設定</string>
     <string name="details">詳細</string>
     <string name="select_app_language">アプリの言語</string>
-    <string name="web_profile_view_details">ウェブプロフィール</string>
 
     //TextView Labels
     <string name="change_language">言語を変更</string>
@@ -40,4 +39,12 @@
     <string name="fav_delete_icon">お気に入り削除アイコン</string>
     <string name="radio_button_custom_icon">ラジオボタンのアイコン</string>
     <string name="welcome_page_bottomAvatar">ウェルカムページ下部の画像</string>
+
+    <string name="view_more">もっと見る</string>
+    <string name="web_profile_view_details">ウェブプロフィール</string>
+    <string name="starts">スタート</string>
+    <string name="forks">フォーク</string>
+    <string name="watchers">監視者</string>
+    <string name="open_issues">公開されていない問題</string>
+    <string name="language">プログラミング言語</string>
 </resources>
