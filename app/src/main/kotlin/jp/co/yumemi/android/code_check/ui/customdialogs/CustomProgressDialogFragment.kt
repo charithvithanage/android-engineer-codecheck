@@ -1,6 +1,8 @@
 package jp.co.yumemi.android.code_check.ui.customdialogs
 
 import android.app.Dialog
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.databinding.FragmentCustomProgressDialogBinding
 import jp.co.yumemi.android.code_check.utils.UIUtils.Companion.changeUiSize
 
@@ -26,6 +29,7 @@ class CustomProgressDialogFragment : DialogFragment() {
 
     companion object {
         private const val ARG_MESSAGE = "message"
+
         /**
          * Create a new instance of CustomProgressDialogFragment with an optional message.
          *
@@ -56,11 +60,33 @@ class CustomProgressDialogFragment : DialogFragment() {
     ): View {
         //Disable back button pressed dialog dismiss event
         isCancelable = false
-        binding =
-            FragmentCustomProgressDialogBinding.inflate(inflater, container, false).apply {
-                lifecycleOwner = this@CustomProgressDialogFragment
+        FragmentCustomProgressDialogBinding.inflate(inflater, container, false).apply {
+            binding = this
+            lifecycleOwner = this@CustomProgressDialogFragment
+            resources.configuration.apply {
+                setDialogBackground(uiMode)
             }
+        }
         return binding.root
+    }
+
+    private fun setDialogBackground(mode: Int) {
+        binding.dialogMainLayout.apply {
+            when (mode and Configuration.UI_MODE_NIGHT_MASK) {
+                UI_MODE_NIGHT_YES -> {
+                    setBackgroundResource(
+                        R.drawable.dark_dialog_content_border_bg
+                    )
+                }
+
+                else -> {
+                    setBackgroundResource(
+                        R.drawable.dialog_content_border_bg
+                    )
+                }
+            }
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -78,4 +104,12 @@ class CustomProgressDialogFragment : DialogFragment() {
             }
         }
     }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        // Check the new night mode and set the background accordingly
+        setDialogBackground(newConfig.uiMode)
+    }
+
 }

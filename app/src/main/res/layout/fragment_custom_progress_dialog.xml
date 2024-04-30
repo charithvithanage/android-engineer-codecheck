@@ -12,14 +12,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/transparent"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/dialogMainLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/dialog_content_border_bg"
             android:orientation="vertical"
             android:paddingLeft="@dimen/dialog_top_padding"
             android:paddingTop="@dimen/dialog_top_padding"
@@ -36,9 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
+                android:contentDescription="@string/progress_dialog_image"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/wait"
-                android:contentDescription="@string/progress_dialog_image">
+                android:src="@mipmap/wait">
 
             </ImageView>
 
@@ -55,12 +53,11 @@
 
             <TextView
                 android:id="@+id/tvMessage"
+                style="@style/DialogMessageStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
-                android:text="@{dialogMessage}"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:text="@{dialogMessage}" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
