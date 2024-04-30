@@ -2,7 +2,9 @@ package jp.co.yumemi.android.code_check
 
 import android.app.Application
 import android.content.Context
+import android.net.ConnectivityManager
 import dagger.hilt.android.HiltAndroidApp
+import jp.co.yumemi.android.code_check.utils.NetworkUtils
 import jp.co.yumemi.android.code_check.utils.SharedPreferencesManager
 
 /**
@@ -18,6 +20,11 @@ class MyApplication : Application() {
      */
     override fun onCreate() {
         super.onCreate()
+        // Initialize NetworkUtils with the system's connectivity service.
+        getSystemService(Context.CONNECTIVITY_SERVICE)
+            .let { it as ConnectivityManager }
+            .let { NetworkUtils.init(it) }
+
         // Initialize SharedPreferencesManager with the application's SharedPreferences.
         getSharedPreferences(
             getString(R.string.preference_file_key),

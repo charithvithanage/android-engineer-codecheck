@@ -9,7 +9,6 @@ import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.content.res.Configuration.ORIENTATION_SQUARE
 import android.content.res.Configuration.ORIENTATION_UNDEFINED
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +16,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -27,6 +27,11 @@ import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialogWithoutAction
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showProgressDialog
 import jp.co.yumemi.android.code_check.utils.LanguageManager
 
 
@@ -48,10 +53,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var menu: Menu
     private lateinit var navController: NavController
+    private var dialog: DialogFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageManager(this).loadLanguage()
+
         DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main).apply {
             binding = this
             val navHostFragment =
@@ -62,8 +69,6 @@ class MainActivity : AppCompatActivity() {
             resources.configuration.apply {
                 // Check the initial device orientation and set the menu accordingly
                 setMenuVisibility(orientation)
-                // Check the initial night mode and set the background accordingly
-                setBackGroundImage(uiMode)
             }
 
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
@@ -76,18 +81,23 @@ class MainActivity : AppCompatActivity() {
                     drawerLayout?.apply {
                         closeBtn.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+
                         }
 
                         homeButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            navController.navigate(R.id.homeFragment)
                         }
 
                         favButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            navController.navigate(R.id.favouritesFragment)
+
                         }
 
                         settingsButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
+                            navController.navigate(R.id.settingsFragment)
                         }
 
                         logoutButtonLayout.setOnClickListener {
@@ -178,6 +188,72 @@ class MainActivity : AppCompatActivity() {
                     title.text = it
                 }
 
+                /* Live data observer to show/hide progress dialog */
+                isProgressDialogVisible.observe(this@MainActivity) { isVisible ->
+                    isVisible?.let { showDialog ->
+                        when {
+                            // If the showDialog == true, show the dialog else dismiss the dialog
+                            showDialog -> {
+                                dialog?.dismiss()
+                                dialog = showProgressDialog(
+                                    this@MainActivity, getString(R.string.progressing)
+                                )
+                            }
+
+                            else -> dialog?.dismiss()
+                        }
+                    }
+                }
+
+                /**
+                 * Observes changes in the errorMessage LiveData and triggers a dialog to display any non-null error messages.
+                 * If an error message is received, dismisses any existing dialog and displays a new AlertDialog
+                 * with the error message.
+                 */
+                errorMessage.observe(this@MainActivity) { errorMessage ->
+                    errorMessage?.let {
+                        dialog?.dismiss()
+                        showAlertDialogWithoutAction(
+                            this@MainActivity,
+                            FAIL,
+                            errorMessage
+                        )
+                    }
+                }
+
+                /**
+                 * Observes changes in the success message LiveData and displays an alert dialog if a non-null success message is received.
+                 *
+                 * @param successMessage LiveData containing success messages.
+                 */
+                successMessage.observe(this@MainActivity) { message ->
+                    message?.let { msg ->
+                        dialog?.dismiss()
+                        showAlertDialogWithoutAction(
+                            this@MainActivity,
+                            SUCCESS,
+                            msg
+                        )
+                    }
+                }
+
+                /**
+                 * Observes changes in the warning message LiveData and displays an alert dialog if a non-null warning message is received.
+                 *
+                 * @param warnMessage LiveData containing warning messages.
+                 */
+                warnMessage.observe(this@MainActivity) { message ->
+                    message?.let {
+                        dialog?.dismiss()
+                        showAlertDialogWithoutAction(
+                            this@MainActivity,
+                            WARN,
+                            message
+                        )
+                    }
+                }
+
+
                 /**
                  * Observe changes in a LiveData and update the bottom menu of the MainActivity accordingly.
                  *
@@ -221,14 +297,14 @@ class MainActivity : AppCompatActivity() {
      * @param sideMenuBinding The binding object for the side menu layout, which provides direct access
      *                        to the TextViews that need updating.
      */
-    private fun updateSideMenuValues(context: Context?, sideMenuBinding:  SideMenuBinding) {
+    private fun updateSideMenuValues(context: Context?, sideMenuBinding: SideMenuBinding) {
         context?.let {
-         sideMenuBinding.apply {
-             homeLabel.text = getString(R.string.menu_home)
-             favMenuLabel.text = getString(R.string.menu_favourites)
-             settingsLabel.text = getString(R.string.menu_settings)
-             logoutLabel.text = getString(R.string.exit)
-         }
+            sideMenuBinding.apply {
+                homeLabel.text = getString(R.string.menu_home)
+                favMenuLabel.text = getString(R.string.menu_favourites)
+                settingsLabel.text = getString(R.string.menu_settings)
+                logoutLabel.text = getString(R.string.exit)
+            }
         }
     }
 
@@ -238,7 +314,10 @@ class MainActivity : AppCompatActivity() {
      * @param context The context used to retrieve string resources for menu item text.
      * @param bottomNavigationView The BottomNavigationView whose menu items need to be updated.
      */
-    private fun updateBottomMenuValues(context: Context?, bottomNavigationView: BottomNavigationView) {
+    private fun updateBottomMenuValues(
+        context: Context?,
+        bottomNavigationView: BottomNavigationView
+    ) {
         context?.let {
             bottomNavigationView.menu.let {
                 it.findItem(R.id.homeFragment).title = getString(R.string.menu_home)
@@ -248,45 +327,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Sets the background image and color for the main layout based on the current UI mode.
-     *
-     * This function sets the background image and background color for the main layout
-     * depending on whether the device is in night mode or not.
-     *
-     * @param mode The UI mode to determine whether the device is in night mode or not.
-     *             Use [Configuration.UI_MODE_NIGHT_YES] for night mode and other values for day mode.
-     */
-    private fun setBackGroundImage(mode: Int) {
-        binding.mainLayout.apply {
-            // Check if it's in night mode
-            // Set dark mode background image
-            // Set light mode background image
-            when (mode and Configuration.UI_MODE_NIGHT_MASK) {
-                Configuration.UI_MODE_NIGHT_YES -> {
-                    setBackgroundResource(
-                        R.mipmap.night_bg
-                    )
-
-                    binding.drawerSideMenu?.sideMenuMainLayout?.setBackgroundColor(Color.parseColor("#000000"))
-                }
-
-                else -> {
-                    setBackgroundResource(R.mipmap.bg)
-                    binding.drawerSideMenu?.sideMenuMainLayout?.setBackgroundColor(Color.parseColor("#ffffff"))
-
-                }
-            }
-        }
-    }
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
         // Check the new device orientation and set the menu accordingly
         setMenuVisibility(newConfig.orientation)
-
-        // Check the new night mode and set the background accordingly
-        setBackGroundImage(newConfig.uiMode)
     }
 
     /**

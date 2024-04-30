@@ -2,7 +2,11 @@ package jp.co.yumemi.android.code_check.ui.home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import jp.co.yumemi.android.code_check.models.GitHubRepoObject
+import jp.co.yumemi.android.code_check.repositories.GitHubRepository
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -16,26 +20,43 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val gitHubRepository: GitHubRepository
 ) :
     ViewModel() {
 
-    //Search View Hint Text
-    private val _searchViewHint = MutableLiveData<String>(null)
-    val searchViewHint get() = _searchViewHint
+    //Error Message Live Data
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage get() = _errorMessage
 
     //User entered text
     var searchViewText: String? = null
 
+    //Git Hub Repo List from the server
+    private val _gitHubRepoList = MutableLiveData<List<GitHubRepoObject>?>()
+    val gitHubRepoList get() = _gitHubRepoList
+
 
     /**
-     * Set a hint text for the search view.
+     * Get the server response and set values to LiveData.
      *
-     * This function updates the [_searchViewHint] LiveData with the provided [hint] text, which serves
-     * as a hint for the search view in the user interface.
+     * This function fetches GitHub repository data based on the provided [inputText] and updates the
+     * [_gitHubRepoList] LiveData with the retrieved data. It also handles errors by updating the
+     * [_errorMessage] LiveData. Additionally, it manages the visibility of a progress dialog with the
      *
-     * @param hint The hint text to be displayed in the search view.
+     * @param inputText The text entered by the user for repository search.
      */
-    fun setSearchViewHint(hint: String) {
-        _searchViewHint.value = hint
+    fun getGitHubRepoList(inputText: String?) {
+        //Show Progress Dialog when click on the search view submit button
+
+        /* View Model Scope - Coroutine */
+        viewModelScope.launch {
+            gitHubRepository.getRepositories(inputText).apply {
+                if (success) {
+                    _gitHubRepoList.value = items
+                } else {
+                    _errorMessage.value = message
+                }
+            }
+        }
     }
 }

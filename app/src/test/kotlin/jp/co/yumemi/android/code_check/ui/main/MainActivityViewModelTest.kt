@@ -82,6 +82,67 @@ class MainActivityViewModelTest {
     }
 
     /**
+     * Tests the LiveData update for success message.
+     * Verifies if the ViewModel correctly updates the success message LiveData and if it posts the
+     * expected success message.
+     */
+    @Test
+    fun `test success message live data updates`() {
+        val testSuccessMessage = "Test Success"
+        // If your ViewModel can post null success messages, test that scenario
+        viewModel.showSuccessDialog(testSuccessMessage)
+
+        // Assert that _successMessage LiveData is updated to null as expected
+        viewModel.successMessage.observeForever { newValue ->
+            assertEquals(testSuccessMessage, newValue)
+        }
+    }
+
+    /**
+     * Tests the LiveData update for error message.
+     * Verifies if the ViewModel correctly updates the error message LiveData and if it posts the
+     * expected error message.
+     */
+    @Test
+    fun `test error message live data updates`() {
+        val testErrorMessage = "Test Error"
+        viewModel.showErrorDialog(testErrorMessage)
+
+        viewModel.errorMessage.observeForever { newValue ->
+            assertEquals(testErrorMessage, newValue)
+        }
+    }
+
+    /**
+     * Tests the LiveData update for warning message.
+     * Verifies if the ViewModel correctly updates the warning message LiveData and if it posts the
+     * expected warning message.
+     */
+    @Test
+    fun `test warn message live data updates`() {
+        val testWarnMessage = "Test Warn"
+        viewModel.showWarnDialog(testWarnMessage)
+
+        viewModel.warnMessage.observeForever { newValue ->
+            assertEquals(testWarnMessage, newValue)
+        }
+    }
+
+    /**
+     *   Test if the `setProgressDialogVisible` method in the viewModel correctly
+     *   updates the `isProgressDialogVisible` LiveData.
+     */
+    @Test
+    fun `setProgressDialogVisible updates LiveData correctly`() {
+        viewModel.setProgressDialogVisible(true)
+        assertThat(viewModel.isProgressDialogVisible.getOrAwaitValue(), `is`(true))
+
+        viewModel.setProgressDialogVisible(false)
+        assertThat(viewModel.isProgressDialogVisible.getOrAwaitValue(), `is`(false))
+    }
+
+
+    /**
      * Tear down method to remove observers after testing.
      */
     @After

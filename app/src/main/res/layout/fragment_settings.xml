@@ -21,7 +21,7 @@
             android:layout_marginStart="@dimen/content_margin"
             android:layout_marginTop="@dimen/page_padding"
             android:layout_marginEnd="@dimen/content_margin"
-            app:cardBackgroundColor="@color/white"
+            style="@style/CardViewBGStyle"
             app:cardCornerRadius="@dimen/content_bg_broder_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
