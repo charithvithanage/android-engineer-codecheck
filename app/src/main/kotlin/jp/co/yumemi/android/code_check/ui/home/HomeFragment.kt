@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
+import jp.co.yumemi.android.code_check.models.GitHubRepoObject
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
 
 /**
@@ -42,6 +43,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeViewModel
     private lateinit var sharedViewModel: MainActivityViewModel
+    private lateinit var repoListAdapter: RepoListAdapter
     private var dialog: DialogFragment? = null
     private lateinit var dialogVisibleObserver: Observer<String?>
 
@@ -93,18 +95,29 @@ class HomeFragment : Fragment() {
                             val enteredValue: String? = searchViewText
                             //Empty value error Alert
                             when {
-                                enteredValue.isNullOrEmpty() -> {
+                                enteredValue.isNullOrEmpty() ->
+                                    sharedViewModel.showErrorDialog(getString(R.string.search_input_empty_error))
 
-                                }
-
-                                else -> when {
-
-                                }
+                                else ->
+                                    getGitHubRepoList(enteredValue)
                             }
                             true
                         }
 
                         else -> false
+                    }
+                }
+                // Initializing RepoListAdapter and setting it to RecyclerView
+                RepoListAdapter(
+                    object : RepoListAdapter.OnItemClickListener {
+                        override fun itemClick(item: GitHubRepoObject, isFavorite: Boolean) {
+
+                        }
+                    }).apply {
+                    repoListAdapter = this
+                    /* Set Adapter to Recycle View */
+                    recyclerView.also { it2 ->
+                        it2.adapter = this
                     }
                 }
 
@@ -125,6 +138,19 @@ class HomeFragment : Fragment() {
      * Observes LiveData updates from the ViewModel and updates the UI accordingly.
      */
     private fun viewModelObservers() {
+        sharedViewModel.apply {
+            // Observer to catch list data
+            // Update RecyclerView Items using DiffUtils
+            viewModel.gitHubRepoList.observe(requireActivity()) { repoList ->
+                repoList?.let {
+                    repoListAdapter.submitList(it)
+                }
+            }
+
+            viewModel.errorMessage.observe(requireActivity()) { message ->
+                showErrorDialog(message)
+            }
+        }
 
     }
 }
