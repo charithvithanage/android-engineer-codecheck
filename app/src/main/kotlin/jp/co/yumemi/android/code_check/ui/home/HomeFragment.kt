@@ -19,6 +19,7 @@ import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.FragmentHomeBinding
 import jp.co.yumemi.android.code_check.models.GitHubRepoObject
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
+import jp.co.yumemi.android.code_check.utils.NetworkUtils
 
 /**
  * HomeFragment for displaying a list of GitHub repositories and handling user interactions.
@@ -82,27 +83,30 @@ class HomeFragment : Fragment() {
     private fun initView() {
         // Setting the search view hint based on the localized string
         viewModel.apply {
-            setSearchViewHint(
-                getString(
-                    R.string.searchInputText_hint
-                )
-            )
             // Setting up the searchInputText's OnEditorActionListener
             binding.apply {
                 searchInputText.setOnEditorActionListener { _, actionId, _ ->
                     when (actionId) {
                         EditorInfo.IME_ACTION_SEARCH -> {
                             val enteredValue: String? = searchViewText
-                            //Empty value error Alert
-                            when {
-                                enteredValue.isNullOrEmpty() ->
-                                    sharedViewModel.showErrorDialog(getString(R.string.search_input_empty_error))
 
-                                else -> {
-                                    sharedViewModel.setProgressDialogVisible(true)
-                                    getGitHubRepoList(enteredValue)
+                            sharedViewModel.apply {
+                                //Empty value error Alert
+                                when {
+                                    enteredValue.isNullOrEmpty() ->
+                                        showErrorDialog(getString(R.string.search_input_empty_error))
+
+                                    else -> when {
+                                        NetworkUtils.isNetworkAvailable() -> {
+                                            setProgressDialogVisible(true)
+                                            getGitHubRepoList(enteredValue)
+                                        }
+                                        else ->
+                                            showErrorDialog(getString(R.string.network_error))
+                                    }
                                 }
                             }
+
                             true
                         }
 

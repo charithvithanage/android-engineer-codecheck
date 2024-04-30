@@ -24,10 +24,6 @@ class HomeViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    //Search View Hint Text
-    private val _searchViewHint = MutableLiveData<String>(null)
-    val searchViewHint get() = _searchViewHint
-
     //Error Message Live Data
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage get() = _errorMessage
@@ -63,17 +59,5 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    /**
-     * Set a hint text for the search view.
-     *
-     * This function updates the [_searchViewHint] LiveData with the provided [hint] text, which serves
-     * as a hint for the search view in the user interface.
-     *
-     * @param hint The hint text to be displayed in the search view.
-     */
-    fun setSearchViewHint(hint: String) {
-        _searchViewHint.value = hint
     }
 }

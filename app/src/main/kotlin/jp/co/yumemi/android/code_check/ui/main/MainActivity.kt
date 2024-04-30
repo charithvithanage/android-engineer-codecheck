@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LanguageManager(this).loadLanguage()
+
         DataBindingUtil.setContentView<ActivityMainBinding?>(this, R.layout.activity_main).apply {
             binding = this
             val navHostFragment =
@@ -206,14 +207,14 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 /**
-                 * Observes changes in the error message LiveData and displays an alert dialog if a non-null error message is received.
-                 *
-                 * @param errorMessage LiveData containing error messages.
+                 * Observes changes in the errorMessage LiveData and triggers a dialog to display any non-null error messages.
+                 * If an error message is received, dismisses any existing dialog and displays a new AlertDialog
+                 * with the error message.
                  */
                 errorMessage.observe(this@MainActivity) { errorMessage ->
                     errorMessage?.let {
                         dialog?.dismiss()
-                        DialogUtils.showAlertDialogWithoutAction(
+                        showAlertDialogWithoutAction(
                             this@MainActivity,
                             FAIL,
                             errorMessage
