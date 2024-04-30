@@ -16,6 +16,12 @@ object StringConstants {
      */
     const val JAPANESE = "ja"
 
+    // Room DB Tables
+    /**
+     * Constant for the Room database table storing GitHub repositories.
+     */
+    const val ROOM_DB_REPO_TABLE = "github_repo_table"
+
     /**
      * Tag for the Fragments.
      */

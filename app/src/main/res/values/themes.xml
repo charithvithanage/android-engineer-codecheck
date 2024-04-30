@@ -100,4 +100,39 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <!-- Recycle View Style -->
+    <style name="RoundedImageViewRounded">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="RepoNameStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+    <style name="RepoTypeStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/gray</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="recycleViewLabelStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/primary_color</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="recycleViewContextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="recycleViewLargeContextStyle" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

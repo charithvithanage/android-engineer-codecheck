@@ -38,5 +38,15 @@
     <dimen name="content_bg_broder_radius">10dp</dimen>
     <dimen name="content_padding">16dp</dimen>
 
+    /* Card Views Dimensions */
+    <dimen name="profile_icon_width">60dp</dimen>
+    <dimen name="content_card_view_corner_radius">20dp</dimen>
+    <dimen name="content_card_view_elevation">10dp</dimen>
+    <dimen name="list_card_view_corner_radius">12dp</dimen>
+    <dimen name="avatar_margin">16dp</dimen>
 
+    /* Recycle View Dimensions */
+    <dimen name="recycle_view_margin">8dp</dimen>
+    <dimen name="forward_arrow_size">15dp</dimen>
+    <dimen name="fav_icon_size">24dp</dimen>
 </resources>
