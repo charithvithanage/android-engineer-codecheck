@@ -134,11 +134,4 @@ class RepoDetailsFragment : Fragment() {
             }
         )
     }
-
-    /**
-     * Called when the view previously created by [onCreateView] has been detached from the fragment.
-     */
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
 }
