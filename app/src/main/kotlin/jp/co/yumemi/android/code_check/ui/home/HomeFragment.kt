@@ -167,7 +167,6 @@ class HomeFragment : Fragment() {
      * Navigates to the RepoDetailsFragment when a GitHub repository item is clicked.
      *
      * @param gitHubRepo The selected GitHub repository object.
-     * @param isFavorite Indicates whether the repository is marked as a favorite.
      */
     fun navigateToRepositoryFragment(gitHubRepo: GitHubRepoObject) {
         findNavController().navigate(

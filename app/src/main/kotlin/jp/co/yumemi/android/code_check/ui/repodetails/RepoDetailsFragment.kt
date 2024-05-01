@@ -32,9 +32,7 @@ import jp.co.yumemi.android.code_check.utils.DialogUtils
  * @property binding View binding for this fragment's layout
  * @property viewModel View model for managing repository details and favorite status
  * @property gitHubRepo The selected GitHub repository to be displayed
- * @property isFavourite Flag indicating whether the repository is marked as a favorite
  * @property sharedViewModel View model shared with the main activity
- * @property localDBResponseObserver Observer for handling responses from local database operations
  */
 class RepoDetailsFragment : Fragment() {
     private val args: RepoDetailsFragmentArgs by navArgs()
@@ -131,9 +129,7 @@ class RepoDetailsFragment : Fragment() {
         //Handle back pressed event
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.homeFragment)
-                // Handle back button press for Home Fragment
-                sharedViewModel.setFragment(HOME_FRAGMENT)
+                findNavController().popBackStack()
             }
         }.apply {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)

@@ -154,7 +154,6 @@ class MainActivity : AppCompatActivity() {
 
             binding.apply {
                 fragment.observe(this@MainActivity) {
-                    showHamburgerMenu(true)
                     // Set the title text based on the observed fragment
                     when (it) {
                         StringConstants.WELCOME_FRAGMENT -> {
@@ -165,6 +164,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.HOME_FRAGMENT -> {
+                            showHamburgerMenu(true)
                             sharedViewModel.setFragmentName(getString(R.string.menu_home))
                             toolbar.isVisible = true
                             title.isVisible = true
@@ -190,10 +190,12 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.FAVOURITE_FRAGMENT -> {
+                            showHamburgerMenu(true)
                             sharedViewModel.setFragmentName(getString(R.string.menu_favourites))
                         }
 
                         StringConstants.SETTINGS_FRAGMENT -> {
+                            showHamburgerMenu(true)
                             sharedViewModel.setFragmentName(getString(R.string.menu_settings))
                         }
                     }
@@ -313,6 +315,11 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         leftButton.setImageResource(R.drawable.left_arrow)
                     }
+
+                    resources.configuration.apply {
+                        // Check the initial device orientation and set the menu accordingly
+                        setMenuVisibility(orientation)
+                    }
                 }
 
                 existConfirmationDialogVisible.observe(this@MainActivity) { isVisible ->
@@ -391,7 +398,15 @@ class MainActivity : AppCompatActivity() {
 
                 ORIENTATION_LANDSCAPE -> {
                     isVisible = true
-                    setImageResource(R.drawable.hamburger)
+                    sharedViewModel.fragment.value.apply {
+                        if (this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
+                            this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
+                        ) {
+                            setImageResource(R.drawable.left_arrow)
+                        } else {
+                            setImageResource(R.drawable.hamburger)
+                        }
+                    }
                 }
 
                 ORIENTATION_SQUARE -> {

@@ -58,19 +58,4 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
         pending.set(true)
         super.setValue(value)
     }
-
-    companion object {
-        /**
-         * Observes the data held by a [LiveData] only once, then automatically removes the observer.
-         *
-         * @param owner The lifecycle owner for this observer.
-         * @param observer The observer that will be notified of data changes.
-         */
-        fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: Observer<T>) {
-            observe(owner) {
-                observer.onChanged(it)
-                removeObserver(observer)
-            }
-        }
-    }
 }

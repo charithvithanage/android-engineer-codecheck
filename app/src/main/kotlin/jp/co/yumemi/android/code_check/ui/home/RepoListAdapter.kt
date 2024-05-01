@@ -75,15 +75,6 @@ class RepoListAdapter @Inject constructor(
             }
         }
     }
-
-    /**
-     * Sets the list of favorite repositories to be displayed alongside the main repository list.
-     *
-     * @param repoList List of [LocalGitHubRepoObject] representing favorite repositories.
-     */
-    fun setFavourites(repoList: List<LocalGitHubRepoObject>) {
-        favoriteItems = repoList
-    }
 }
 
 /**

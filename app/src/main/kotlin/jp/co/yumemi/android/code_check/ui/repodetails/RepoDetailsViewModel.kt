@@ -28,7 +28,7 @@ import javax.inject.Inject
  * @property forksLabel LiveData indicating the text to be set for the forks label.
  * @property watchersLabel LiveData indicating the text to be set for the watchers label.
  * @property openIssuesLabel LiveData indicating the text to be set for the open issues label.
- * @property language LiveData indicating the programming language associated with the repository.
+ * @property languageString LiveData indicating the programming language associated with the repository.
  */
 @HiltViewModel
 class RepoDetailsViewModel @Inject constructor(private val localGitHubRepository: LocalGitHubRepository) :
