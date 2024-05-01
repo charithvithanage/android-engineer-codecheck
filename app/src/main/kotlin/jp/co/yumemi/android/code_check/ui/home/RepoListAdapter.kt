@@ -39,9 +39,8 @@ class RepoListAdapter @Inject constructor(
          * Called when a GitHub repository item is clicked.
          *
          * @param item Clicked [GitHubRepoObject].
-         * @param isFavorite Boolean indicating whether the item is marked as a favorite.
          */
-        fun itemClick(item: GitHubRepoObject, isFavorite: Boolean)
+        fun itemClick(item: GitHubRepoObject)
     }
 
     inner class RepoListViewHolder(val binding: LayoutRepoListItemBinding) :
@@ -70,7 +69,7 @@ class RepoListAdapter @Inject constructor(
             bind(repoObject)
             binding.apply {
                 root.setOnClickListener {
-                    itemClickListener.itemClick(repoObject, isFavorite)
+                    itemClickListener.itemClick(repoObject)
                 }
                 favIcon.isVisible = isFavorite
             }

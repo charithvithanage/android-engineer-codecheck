@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
                 // Initializing RepoListAdapter and setting it to RecyclerView
                 RepoListAdapter(
                     object : RepoListAdapter.OnItemClickListener {
-                        override fun itemClick(item: GitHubRepoObject, isFavorite: Boolean) {
+                        override fun itemClick(item: GitHubRepoObject) {
                             navigateToRepositoryFragment(item)
                         }
                     }).apply {

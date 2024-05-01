@@ -50,6 +50,8 @@ class MainActivityViewModel @Inject constructor() :
     private val _existConfirmationDialogVisible = MutableLiveData<Boolean>()
     val existConfirmationDialogVisible get() = _existConfirmationDialogVisible
 
+    val expandedStates = mutableMapOf<Long, Boolean>()
+
     /**
      * Sets the currently displayed fragment.
      *
