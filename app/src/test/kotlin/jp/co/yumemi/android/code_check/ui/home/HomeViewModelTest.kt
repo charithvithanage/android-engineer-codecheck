@@ -25,8 +25,7 @@ import org.mockito.MockitoAnnotations
  * Unit tests for the [HomeViewModel] class, which is responsible for testing the functionality
  * of the Home screen's ViewModel.
  *
- * This class uses JUnit4 and Mockito for testing, along with [InstantTaskExecutorRule] and
- * [TestCoroutineDispatcher] to handle asynchronous tasks.
+ * This class uses JUnit4 and Mockito for testing, along with [InstantTaskExecutorRule]
  *
  * @see HomeViewModel
  * @see GitHubRepository
