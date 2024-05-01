@@ -43,5 +43,20 @@
         <argument
             android:name="item"
             app:argType="jp.co.yumemi.android.code_check.models.GitHubRepoObject" />
+        <action
+            android:id="@+id/action_repoDetailsFragment_to_webProfileViewFragment"
+            app:destination="@id/webProfileViewFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/webProfileViewFragment"
+        android:name="jp.co.yumemi.android.code_check.ui.webprofileview.WebProfileViewFragment"
+        android:label="@string/web_profile_view_details"
+        tools:layout="@layout/fragment_web_profile_view">
+        <argument
+            android:name="htmlUrl"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+
 </navigation>

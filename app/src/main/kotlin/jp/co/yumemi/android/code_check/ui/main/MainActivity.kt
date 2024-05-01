@@ -28,10 +28,11 @@ import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
 import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener
+import jp.co.yumemi.android.code_check.ui.customdialogs.CustomAlertDialogListener
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
-import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialogWithoutAction
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialog
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showConfirmAlertDialog
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showProgressDialog
 import jp.co.yumemi.android.code_check.utils.LanguageManager
@@ -47,7 +48,6 @@ import jp.co.yumemi.android.code_check.utils.LanguageManager
  * @property sharedViewModel The shared view model for communicating data and state between fragments.
  * @property binding The data binding object that allows for easy interaction with the layout XML.
  */
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedViewModel: MainActivityViewModel
@@ -68,14 +68,13 @@ class MainActivity : AppCompatActivity() {
             navController = navHostFragment.navController
             setupNavController()
 
-            resources.configuration.apply {
-                // Check the initial device orientation and set the menu accordingly
-                setMenuVisibility(orientation)
-            }
-
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
                 sharedViewModel = this
                 vm = this
+                resources.configuration.apply {
+                    // Check the initial device orientation and set the menu accordingly
+                    setMenuVisibility(orientation)
+                }
             }
 
             drawerSideMenu?.let {
@@ -106,15 +105,15 @@ class MainActivity : AppCompatActivity() {
                             closeDrawer(GravityCompat.START)
                             sharedViewModel.setExitConfirmationDialogVisible(true)
                         }
-
-                        leftButton.setOnClickListener {
-                            if (sharedViewModel.showHamburgerMenu.value == true) {
-                                openDrawer(GravityCompat.START)
-                            } else {
-                                navController.popBackStack()
-                            }
-                        }
                     }
+                }
+            }
+
+            leftButton.setOnClickListener {
+                if (sharedViewModel.showHamburgerMenu.value == true) {
+                    drawerLayout?.openDrawer(GravityCompat.START)
+                } else {
+                    navController.popBackStack()
                 }
             }
 
@@ -173,6 +172,23 @@ class MainActivity : AppCompatActivity() {
                             drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                         }
 
+                        StringConstants.ACCOUNT_DETAILS_FRAGMENT -> {
+                            bottomNavigationMenu?.isVisible = false
+                            showHamburgerMenu(false)
+                            leftButton.isVisible = true
+                            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                            sharedViewModel.setFragmentName(getString(R.string.account_details))
+                        }
+
+                        StringConstants.WEB_PROFILE_VIEW_FRAGMENT -> {
+                            bottomNavigationMenu?.isVisible = false
+                            toolbar.isVisible = true
+                            showHamburgerMenu(false)
+                            leftButton.isVisible = true
+                            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                            sharedViewModel.setFragmentName(getString(R.string.web_profile))
+                        }
+
                         StringConstants.FAVOURITE_FRAGMENT -> {
                             sharedViewModel.setFragmentName(getString(R.string.menu_favourites))
                         }
@@ -216,10 +232,14 @@ class MainActivity : AppCompatActivity() {
                 errorMessage.observe(this@MainActivity) { errorMessage ->
                     errorMessage?.let {
                         dialog?.dismiss()
-                        showAlertDialogWithoutAction(
+                        showAlertDialog(
                             this@MainActivity,
                             FAIL,
-                            errorMessage
+                            errorMessage, object : CustomAlertDialogListener {
+                                override fun onDialogButtonClicked() {
+                                    sharedViewModel.showErrorDialog(null)
+                                }
+                            }
                         )
                     }
                 }
@@ -232,10 +252,14 @@ class MainActivity : AppCompatActivity() {
                 successMessage.observe(this@MainActivity) { message ->
                     message?.let { msg ->
                         dialog?.dismiss()
-                        showAlertDialogWithoutAction(
+                        showAlertDialog(
                             this@MainActivity,
                             SUCCESS,
-                            msg
+                            msg, object : CustomAlertDialogListener {
+                                override fun onDialogButtonClicked() {
+                                    sharedViewModel.showSuccessDialog(null)
+                                }
+                            }
                         )
                     }
                 }
@@ -248,10 +272,14 @@ class MainActivity : AppCompatActivity() {
                 warnMessage.observe(this@MainActivity) { message ->
                     message?.let {
                         dialog?.dismiss()
-                        showAlertDialogWithoutAction(
+                        showAlertDialog(
                             this@MainActivity,
                             WARN,
-                            message
+                            message, object : CustomAlertDialogListener {
+                                override fun onDialogButtonClicked() {
+                                    sharedViewModel.showWarnDialog(null)
+                                }
+                            }
                         )
                     }
                 }
@@ -297,9 +325,13 @@ class MainActivity : AppCompatActivity() {
                                 }
 
                                 override fun onNegativeButtonClick() {
+                                    // Reset the LiveData here so that it does not trigger again
+                                    setExitConfirmationDialogVisible(false)
                                 }
                             }
                         )
+                        // Reset the LiveData here so that it does not trigger again
+                        setExitConfirmationDialogVisible(false)
                     }
                 }
             }
@@ -344,7 +376,17 @@ class MainActivity : AppCompatActivity() {
         binding.leftButton.apply {
             when (orientation) {
                 ORIENTATION_PORTRAIT -> {
-                    isVisible = false
+                    sharedViewModel.fragment.value.apply {
+                        if (this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
+                            this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
+                        ) {
+                            isVisible = true
+                        } else {
+                            isVisible = false
+                        }
+                    }
+
+
                 }
 
                 ORIENTATION_LANDSCAPE -> {

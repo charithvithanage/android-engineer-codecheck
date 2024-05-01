@@ -58,8 +58,10 @@ class RepoDetailsFragment : Fragment() {
         }
 
         // Initialize the shared ViewModel with the main activity
-        sharedViewModel =
-            ViewModelProvider(requireActivity())[MainActivityViewModel::class.java]
+        ViewModelProvider(requireActivity())[MainActivityViewModel::class.java].apply {
+            sharedViewModel = this
+            setFragment(ACCOUNT_DETAILS_FRAGMENT)
+        }
 
         return binding.root
     }
@@ -88,16 +90,16 @@ class RepoDetailsFragment : Fragment() {
                     //Update Report Details Resource values with localization
                     updateUI(
                         getString(R.string.view_more),
-                        getString( R.string.starts),
-                        getString( R.string.forks),
+                        getString(R.string.starts),
+                        getString(R.string.forks),
                         getString(R.string.watchers),
-                        getString( R.string.open_issues),
-                        getString( R.string.language)
+                        getString(R.string.open_issues),
+                        getString(R.string.language)
                     )
                 }
 
                 btnMore.setOnClickListener {
-//                    navigateToWebProfileFragment()
+                    navigateToWebProfileFragment()
                 }
 
             }
@@ -123,15 +125,15 @@ class RepoDetailsFragment : Fragment() {
      * If the owner's HTML URL is available, it constructs the appropriate navigation action.
      * If the HTML URL is null, the navigation will not be performed.
      */
-//    private fun navigateToWebProfileFragment() {
-//        findNavController().navigate(
-//            gitHubRepo.owner?.htmlUrl.let {
-//                RepoDetailsFragmentDirections.actionRepoDetailsFragmentToWebProfileViewFragment(
-//                    it
-//                )
-//            }
-//        )
-//    }
+    private fun navigateToWebProfileFragment() {
+        findNavController().navigate(
+            gitHubRepo.owner?.htmlUrl.let {
+                RepoDetailsFragmentDirections.actionRepoDetailsFragmentToWebProfileViewFragment(
+                    it
+                )
+            }
+        )
+    }
 
     /**
      * Called when the view previously created by [onCreateView] has been detached from the fragment.
