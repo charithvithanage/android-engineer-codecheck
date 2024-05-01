@@ -27,10 +27,13 @@ import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
+import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener
+import jp.co.yumemi.android.code_check.ui.customdialogs.CustomAlertDialogListener
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
-import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialogWithoutAction
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showAlertDialog
+import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showConfirmAlertDialog
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.showProgressDialog
 import jp.co.yumemi.android.code_check.utils.LanguageManager
 
@@ -45,7 +48,6 @@ import jp.co.yumemi.android.code_check.utils.LanguageManager
  * @property sharedViewModel The shared view model for communicating data and state between fragments.
  * @property binding The data binding object that allows for easy interaction with the layout XML.
  */
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var sharedViewModel: MainActivityViewModel
@@ -66,14 +68,13 @@ class MainActivity : AppCompatActivity() {
             navController = navHostFragment.navController
             setupNavController()
 
-            resources.configuration.apply {
-                // Check the initial device orientation and set the menu accordingly
-                setMenuVisibility(orientation)
-            }
-
             ViewModelProvider(this@MainActivity)[MainActivityViewModel::class.java].apply {
                 sharedViewModel = this
                 vm = this
+                resources.configuration.apply {
+                    // Check the initial device orientation and set the menu accordingly
+                    setMenuVisibility(orientation)
+                }
             }
 
             drawerSideMenu?.let {
@@ -102,16 +103,17 @@ class MainActivity : AppCompatActivity() {
 
                         logoutButtonLayout.setOnClickListener {
                             closeDrawer(GravityCompat.START)
-                        }
-
-                        leftButton.setOnClickListener {
-                            if (sharedViewModel.showHamburgerMenu.value == true) {
-                                openDrawer(GravityCompat.START)
-                            } else {
-                                navController.popBackStack()
-                            }
+                            sharedViewModel.setExitConfirmationDialogVisible(true)
                         }
                     }
+                }
+            }
+
+            leftButton.setOnClickListener {
+                if (sharedViewModel.showHamburgerMenu.value == true) {
+                    drawerLayout?.openDrawer(GravityCompat.START)
+                } else {
+                    navController.popBackStack()
                 }
             }
 
@@ -170,6 +172,23 @@ class MainActivity : AppCompatActivity() {
                             drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                         }
 
+                        StringConstants.ACCOUNT_DETAILS_FRAGMENT -> {
+                            bottomNavigationMenu?.isVisible = false
+                            showHamburgerMenu(false)
+                            leftButton.isVisible = true
+                            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                            sharedViewModel.setFragmentName(getString(R.string.account_details))
+                        }
+
+                        StringConstants.WEB_PROFILE_VIEW_FRAGMENT -> {
+                            bottomNavigationMenu?.isVisible = false
+                            toolbar.isVisible = true
+                            showHamburgerMenu(false)
+                            leftButton.isVisible = true
+                            drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                            sharedViewModel.setFragmentName(getString(R.string.web_profile))
+                        }
+
                         StringConstants.FAVOURITE_FRAGMENT -> {
                             sharedViewModel.setFragmentName(getString(R.string.menu_favourites))
                         }
@@ -213,10 +232,14 @@ class MainActivity : AppCompatActivity() {
                 errorMessage.observe(this@MainActivity) { errorMessage ->
                     errorMessage?.let {
                         dialog?.dismiss()
-                        showAlertDialogWithoutAction(
+                        showAlertDialog(
                             this@MainActivity,
                             FAIL,
-                            errorMessage
+                            errorMessage, object : CustomAlertDialogListener {
+                                override fun onDialogButtonClicked() {
+                                    sharedViewModel.showErrorDialog(null)
+                                }
+                            }
                         )
                     }
                 }
@@ -229,10 +252,14 @@ class MainActivity : AppCompatActivity() {
                 successMessage.observe(this@MainActivity) { message ->
                     message?.let { msg ->
                         dialog?.dismiss()
-                        showAlertDialogWithoutAction(
+                        showAlertDialog(
                             this@MainActivity,
                             SUCCESS,
-                            msg
+                            msg, object : CustomAlertDialogListener {
+                                override fun onDialogButtonClicked() {
+                                    sharedViewModel.showSuccessDialog(null)
+                                }
+                            }
                         )
                     }
                 }
@@ -245,10 +272,14 @@ class MainActivity : AppCompatActivity() {
                 warnMessage.observe(this@MainActivity) { message ->
                     message?.let {
                         dialog?.dismiss()
-                        showAlertDialogWithoutAction(
+                        showAlertDialog(
                             this@MainActivity,
                             WARN,
-                            message
+                            message, object : CustomAlertDialogListener {
+                                override fun onDialogButtonClicked() {
+                                    sharedViewModel.showWarnDialog(null)
+                                }
+                            }
                         )
                     }
                 }
@@ -260,11 +291,14 @@ class MainActivity : AppCompatActivity() {
                  * @param @MainActivity The current MainActivity instance where this code is executed.
                  */
                 updateLabels.observe(this@MainActivity) {
-                    binding.bottomNavigationMenu?.let {
-                        updateBottomMenuValues(this@MainActivity, it)
+                    bottomNavigationMenu?.menu?.let {
+                        it.findItem(R.id.exitMenu).setOnMenuItemClickListener {
+                            sharedViewModel.setExitConfirmationDialogVisible(true)
+                            true
+                        }
                     }
 
-                    binding.drawerSideMenu?.let {
+                    drawerSideMenu?.let {
                         updateSideMenuValues(this@MainActivity, it)
                     }
                 }
@@ -275,14 +309,32 @@ class MainActivity : AppCompatActivity() {
                  */
                 showHamburgerMenu.observe(this@MainActivity) { isVisible ->
                     if (isVisible) {
-                        binding.leftButton.setImageResource(R.drawable.hamburger)
+                        leftButton.setImageResource(R.drawable.hamburger)
                     } else {
-                        binding.leftButton.setImageResource(R.drawable.left_arrow)
+                        leftButton.setImageResource(R.drawable.left_arrow)
                     }
                 }
 
-            }
+                existConfirmationDialogVisible.observe(this@MainActivity) { isVisible ->
+                    if (isVisible) {
+                        showConfirmAlertDialog(this@MainActivity,
+                            getString(R.string.exit_confirmation_message),
+                            object : ConfirmDialogButtonClickListener {
+                                override fun onPositiveButtonClick() {
+                                    finish()
+                                }
 
+                                override fun onNegativeButtonClick() {
+                                    // Reset the LiveData here so that it does not trigger again
+                                    setExitConfirmationDialogVisible(false)
+                                }
+                            }
+                        )
+                        // Reset the LiveData here so that it does not trigger again
+                        setExitConfirmationDialogVisible(false)
+                    }
+                }
+            }
         }
     }
 
@@ -308,25 +360,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Updates the text values of menu items in the provided [bottomNavigationView] based on the current context.
-     *
-     * @param context The context used to retrieve string resources for menu item text.
-     * @param bottomNavigationView The BottomNavigationView whose menu items need to be updated.
-     */
-    private fun updateBottomMenuValues(
-        context: Context?,
-        bottomNavigationView: BottomNavigationView
-    ) {
-        context?.let {
-            bottomNavigationView.menu.let {
-                it.findItem(R.id.homeFragment).title = getString(R.string.menu_home)
-                it.findItem(R.id.favouritesFragment).title = getString(R.string.menu_favourites)
-                it.findItem(R.id.settingsFragment).title = getString(R.string.menu_settings)
-            }
-        }
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
@@ -343,7 +376,17 @@ class MainActivity : AppCompatActivity() {
         binding.leftButton.apply {
             when (orientation) {
                 ORIENTATION_PORTRAIT -> {
-                    isVisible = false
+                    sharedViewModel.fragment.value.apply {
+                        if (this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
+                            this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
+                        ) {
+                            isVisible = true
+                        } else {
+                            isVisible = false
+                        }
+                    }
+
+
                 }
 
                 ORIENTATION_LANDSCAPE -> {

@@ -50,7 +50,6 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        viewModelObservers()
     }
 
     /**
@@ -89,18 +88,10 @@ class SettingsFragment : Fragment() {
         // Handle back button press for Home Fragment
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
+                sharedViewModel.setExitConfirmationDialogVisible(true)
             }
         }.apply {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)
         }
     }
-
-    /**
-     * Observes LiveData updates from the ViewModel and updates the UI accordingly.
-     */
-    private fun viewModelObservers() {
-
-    }
-
 }

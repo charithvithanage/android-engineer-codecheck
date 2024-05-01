@@ -10,6 +10,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_favourites">Favourites</string>
     <string name="menu_settings">Settings</string>
+    <string name="account_details">Account Details</string>
+    <string name="web_profile">Web Profile</string>
 
     <string name="details">Details</string>
     <string name="web_profile_view_details">Web Profile</string>
@@ -19,6 +21,7 @@
     <string name="change_language">Change Language</string>
     <string name="welcomePageContent">Explore the world of GitHub like never before with GitHub Explorer, your all-in-one companion for discovering, managing, and staying connected with your favorite GitHub accounts.</string>
     <string name="progressing">Progressing.....</string>
+    <string name="exit_confirmation_message">Do you want to exit?</string>
 
     //Button Labels
     <string name="next">Next</string>
@@ -26,6 +29,8 @@
     <string name="english">English</string>
     <string name="japanese">日本語</string>
     <string name="ok">OK</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
 
     <!-- Image content Descriptions -->
     <string name="app_logo">App Logo</string>
@@ -39,5 +44,11 @@
     <string name="radio_button_custom_icon">Radio Button Icon</string>
     <string name="welcome_page_bottomAvatar">Welcome Page Bottom Image</string>
 
-
+    <!-- Details Page Resource Values -->
+    <string name="view_more">View More</string>
+    <string name="starts">Starts</string>
+    <string name="forks">Forks</string>
+    <string name="watchers">Watchers</string>
+    <string name="open_issues">Open Issues</string>
+    <string name="language">Language</string>
 </resources>

@@ -13,6 +13,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants
@@ -101,6 +102,7 @@ class HomeFragment : Fragment() {
                                             setProgressDialogVisible(true)
                                             getGitHubRepoList(enteredValue)
                                         }
+
                                         else ->
                                             showErrorDialog(getString(R.string.network_error))
                                     }
@@ -117,7 +119,7 @@ class HomeFragment : Fragment() {
                 RepoListAdapter(
                     object : RepoListAdapter.OnItemClickListener {
                         override fun itemClick(item: GitHubRepoObject, isFavorite: Boolean) {
-
+                            navigateToRepositoryFragment(item)
                         }
                     }).apply {
                     repoListAdapter = this
@@ -133,7 +135,7 @@ class HomeFragment : Fragment() {
         // Handle back button press for Home Fragment
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
+                sharedViewModel.setExitConfirmationDialogVisible(true)
             }
         }.apply {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)
@@ -159,6 +161,19 @@ class HomeFragment : Fragment() {
                 showErrorDialog(message)
             }
         }
+    }
 
+    /**
+     * Navigates to the RepoDetailsFragment when a GitHub repository item is clicked.
+     *
+     * @param gitHubRepo The selected GitHub repository object.
+     * @param isFavorite Indicates whether the repository is marked as a favorite.
+     */
+    fun navigateToRepositoryFragment(gitHubRepo: GitHubRepoObject) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(
+                gitHubRepo
+            )
+        )
     }
 }

@@ -22,7 +22,7 @@
     <item>
         <shape android:shape="rectangle">
             <corners android:radius="8dp" />
-            <solid android:color="#FFFFFF" /> <!-- Same as background color -->
+            <solid android:color="@color/dialog_bg_color" /> <!-- Same as background color -->
             <padding
                 android:bottom="0dp"
                 android:left="0dp"

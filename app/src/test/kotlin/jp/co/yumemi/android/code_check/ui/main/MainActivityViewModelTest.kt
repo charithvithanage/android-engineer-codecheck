@@ -141,6 +141,15 @@ class MainActivityViewModelTest {
         assertThat(viewModel.isProgressDialogVisible.getOrAwaitValue(), `is`(false))
     }
 
+    @Test
+    fun `setExitConfirmationDialogVisible updates LiveData correctly`() {
+        viewModel.setExitConfirmationDialogVisible(true)
+        assertThat(viewModel.existConfirmationDialogVisible.getOrAwaitValue(), `is`(true))
+
+        viewModel.setExitConfirmationDialogVisible(false)
+        assertThat(viewModel.existConfirmationDialogVisible.getOrAwaitValue(), `is`(false))
+    }
+
 
     /**
      * Tear down method to remove observers after testing.

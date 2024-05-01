@@ -3,7 +3,10 @@ package jp.co.yumemi.android.code_check.utils
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener
 import jp.co.yumemi.android.code_check.ui.customdialogs.CustomAlertDialogFragment
+import jp.co.yumemi.android.code_check.ui.customdialogs.CustomAlertDialogListener
+import jp.co.yumemi.android.code_check.ui.customdialogs.CustomConfirmAlertDialogFragment
 import jp.co.yumemi.android.code_check.ui.customdialogs.CustomProgressDialogFragment
 
 /**
@@ -41,6 +44,11 @@ class DialogUtils {
          */
         const val PROGRESS_DIALOG_FRAGMENT_TAG = "ProgressDialogFragmentTag"
 
+        /**
+         * Represents the tag for a custom confirm dialog fragment.
+         */
+        const val CONFIRM_DIALOG_FRAGMENT_TAG = "ConfirmDialogFragmentTag"
+
 
         /**
          * Show a custom alert dialog without any button click event.
@@ -48,15 +56,20 @@ class DialogUtils {
          * @param context The context in which the dialog should be shown.
          * @param type The type of the dialog (Success, Fail, or Warn Alert).
          * @param message The message body to be displayed in the dialog.
+         * @param dialogButtonClickListener The listener for dialog button click events.
          */
-        fun showAlertDialogWithoutAction(
-            context: Context, type: String, message: String?
+        fun showAlertDialog(
+            context: Context,
+            type: String,
+            message: String?,
+            dialogButtonClickListener: CustomAlertDialogListener
         ) {
             (context as? AppCompatActivity)?.supportFragmentManager?.let { fragmentManager ->
-                CustomAlertDialogFragment.newInstance(message, type).show(
-                    fragmentManager,
-                    ALERT_DIALOG_FRAGMENT_TAG
-                )
+                CustomAlertDialogFragment.newInstance(message, type, dialogButtonClickListener)
+                    .show(
+                        fragmentManager,
+                        ALERT_DIALOG_FRAGMENT_TAG
+                    )
             }
         }
 
@@ -75,8 +88,25 @@ class DialogUtils {
             }
         }
 
-
+        /**
+         * Show a custom confirm alert dialog with an icon inside an activity.
+         *
+         * @param context The context in which the dialog should be shown.
+         * @param message The message body to be displayed in the dialog.
+         * @param dialogButtonClickListener The listener for dialog button click events.
+         */
+        fun showConfirmAlertDialog(
+            context: Context,
+            message: String?,
+            dialogButtonClickListener: ConfirmDialogButtonClickListener
+        ) {
+            (context as? AppCompatActivity)?.supportFragmentManager?.let { fragmentManager ->
+                CustomConfirmAlertDialogFragment.newInstance(message, dialogButtonClickListener)
+                    .show(
+                        fragmentManager,
+                        CONFIRM_DIALOG_FRAGMENT_TAG
+                    )
+            }
+        }
     }
-
-
 }
