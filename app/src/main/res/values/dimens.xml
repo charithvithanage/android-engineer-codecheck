@@ -50,4 +50,6 @@
     <dimen name="recycle_view_margin">8dp</dimen>
     <dimen name="forward_arrow_size">15dp</dimen>
     <dimen name="fav_icon_size">24dp</dimen>
+    <dimen name="image_button_size">30dp</dimen>
+
 </resources>

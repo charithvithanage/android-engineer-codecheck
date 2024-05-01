@@ -17,7 +17,9 @@ import jp.co.yumemi.android.code_check.constants.StringConstants.ACCOUNT_DETAILS
 import jp.co.yumemi.android.code_check.constants.StringConstants.HOME_FRAGMENT
 import jp.co.yumemi.android.code_check.databinding.FragmentRepoDetailsBinding
 import jp.co.yumemi.android.code_check.models.GitHubRepoObject
+import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
+import jp.co.yumemi.android.code_check.utils.DialogUtils
 
 /**
  * Fragment that displays details of a GitHub repository and allows users to mark it as a favorite.
@@ -69,14 +71,6 @@ class RepoDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        viewModelObservers()
-    }
-
-    /**
-     * Initialize ViewModel observers.
-     */
-    private fun viewModelObservers() {
-
     }
 
     /**
@@ -95,6 +89,32 @@ class RepoDetailsFragment : Fragment() {
                         getString(R.string.watchers),
                         getString(R.string.open_issues),
                         getString(R.string.language)
+                    )
+                }
+
+                btnFav.setOnClickListener {
+                    val confirmationMessage = favouriteStatus.value?.let {
+                        if (it) {
+                            R.string.remove_fav_confirmation_message
+                        } else {
+                            R.string.add_fav_confirmation_message
+                        }
+                    } ?: R.string.add_fav_confirmation_message
+
+                    DialogUtils.showConfirmAlertDialog(
+                        requireActivity(),
+                        getString( confirmationMessage),
+                        object : ConfirmDialogButtonClickListener {
+                            override fun onPositiveButtonClick() {
+                                when (favouriteStatus.value) {
+                                    true -> deleteFavourite(gitHubRepo.id)
+                                    else -> addToFavourites()
+                                }
+                            }
+
+                            override fun onNegativeButtonClick() {
+                            }
+                        }
                     )
                 }
 

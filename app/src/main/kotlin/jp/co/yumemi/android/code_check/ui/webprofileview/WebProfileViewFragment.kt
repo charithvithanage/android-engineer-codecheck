@@ -43,9 +43,11 @@ class WebProfileViewFragment : Fragment() {
             lifecycleOwner = this@WebProfileViewFragment
             // Configure the WebView
             webView.run {
-                settings.javaScriptEnabled = true
-                settings.loadWithOverviewMode = true
-                settings.useWideViewPort = true
+                settings.apply {
+                    javaScriptEnabled = true
+                    loadWithOverviewMode = true
+                    useWideViewPort = true
+                }
 
                 // Load the Git Hub User Profile HTML URL in the WebView
                 htmlUrl?.let { loadUrl(it) }
