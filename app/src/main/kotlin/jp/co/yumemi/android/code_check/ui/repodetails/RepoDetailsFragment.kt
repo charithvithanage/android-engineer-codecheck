@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants.ACCOUNT_DETAILS_FRAGMENT
-import jp.co.yumemi.android.code_check.constants.StringConstants.HOME_FRAGMENT
 import jp.co.yumemi.android.code_check.databinding.FragmentRepoDetailsBinding
 import jp.co.yumemi.android.code_check.models.GitHubRepoObject
 import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener

@@ -384,13 +384,8 @@ class MainActivity : AppCompatActivity() {
             when (orientation) {
                 ORIENTATION_PORTRAIT -> {
                     sharedViewModel.fragment.value.apply {
-                        if (this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
-                            this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
-                        ) {
-                            isVisible = true
-                        } else {
-                            isVisible = false
-                        }
+                        isVisible = this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
+                                this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
                     }
 
 
@@ -399,13 +394,15 @@ class MainActivity : AppCompatActivity() {
                 ORIENTATION_LANDSCAPE -> {
                     isVisible = true
                     sharedViewModel.fragment.value.apply {
-                        if (this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
-                            this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
-                        ) {
-                            setImageResource(R.drawable.left_arrow)
-                        } else {
-                            setImageResource(R.drawable.hamburger)
-                        }
+                        setImageResource(
+                            if (this == StringConstants.ACCOUNT_DETAILS_FRAGMENT ||
+                                this == StringConstants.WEB_PROFILE_VIEW_FRAGMENT
+                            ) {
+                                R.drawable.left_arrow
+                            } else {
+                                R.drawable.hamburger
+                            }
+                        )
                     }
                 }
 
