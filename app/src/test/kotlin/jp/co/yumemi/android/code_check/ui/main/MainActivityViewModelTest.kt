@@ -34,6 +34,11 @@ class MainActivityViewModelTest {
     @Mock
     private lateinit var updateLabelsObserver: Observer<Boolean>
 
+    @Mock
+    private lateinit var existConfirmationDialogVisibleObserver: Observer<Boolean>
+
+    @Mock
+    private lateinit var isSearchResultsEmptyObserver: Observer<Boolean>
     @Before
     fun setUp() {
         MockitoAnnotations.openMocks(this)
@@ -42,6 +47,8 @@ class MainActivityViewModelTest {
         // Observe LiveData objects
         viewModel.showHamburgerMenu.observeForever(isShowHamburgerMenuObserver)
         viewModel.updateLabels.observeForever(updateLabelsObserver)
+        viewModel.existConfirmationDialogVisible.observeForever(existConfirmationDialogVisibleObserver)
+        viewModel.isSearchResultsEmpty.observeForever(isSearchResultsEmptyObserver)
     }
 
     /**
@@ -150,6 +157,14 @@ class MainActivityViewModelTest {
         assertThat(viewModel.existConfirmationDialogVisible.getOrAwaitValue(), `is`(false))
     }
 
+    @Test
+    fun `setEmptyDataImage updates LiveData correctly`() {
+        viewModel.setEmptyDataImage(true)
+        assertThat(viewModel.isSearchResultsEmpty.getOrAwaitValue(), `is`(true))
+
+        viewModel.setEmptyDataImage(false)
+        assertThat(viewModel.isSearchResultsEmpty.getOrAwaitValue(), `is`(false))
+    }
 
     /**
      * Tear down method to remove observers after testing.
@@ -158,5 +173,7 @@ class MainActivityViewModelTest {
     fun tearDown() {
         viewModel.showHamburgerMenu.removeObserver(isShowHamburgerMenuObserver)
         viewModel.updateLabels.removeObserver(updateLabelsObserver)
+        viewModel.existConfirmationDialogVisible.removeObserver(existConfirmationDialogVisibleObserver)
+        viewModel.isSearchResultsEmpty.removeObserver(isSearchResultsEmptyObserver)
     }
 }

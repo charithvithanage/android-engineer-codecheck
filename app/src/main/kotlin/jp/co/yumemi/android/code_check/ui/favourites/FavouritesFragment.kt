@@ -146,6 +146,10 @@ class FavouritesFragment : Fragment() {
             sharedViewModel.apply {
                 list?.let {
                     favouriteListAdapter.submitList(it)
+                    when {
+                        it.isEmpty() -> setEmptyDataImage(true)
+                        else -> setEmptyDataImage(false)
+                    }
                 }
             }
         }

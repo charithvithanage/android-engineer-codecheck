@@ -24,6 +24,10 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.constants.ImageResources
+import jp.co.yumemi.android.code_check.constants.ImageResources.GIT_ACCOUNT_SEARCH_IMAGE_CODE
+import jp.co.yumemi.android.code_check.constants.ImageResources.NO_DATA_IMAGE_CODE
+import jp.co.yumemi.android.code_check.constants.ImageResources.getImageResources
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.ActivityMainBinding
 import jp.co.yumemi.android.code_check.databinding.SideMenuBinding
@@ -157,6 +161,7 @@ class MainActivity : AppCompatActivity() {
                     // Set the title text based on the observed fragment
                     when (it) {
                         StringConstants.WELCOME_FRAGMENT -> {
+                            setEmptyDataImage(false)
                             toolbar.isVisible = false
                             title.isVisible = false
                             bottomNavigationMenu?.isVisible = false
@@ -164,6 +169,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.HOME_FRAGMENT -> {
+                            setEmptyDataImage(true)
                             showHamburgerMenu(true)
                             sharedViewModel.setFragmentName(getString(R.string.menu_home))
                             toolbar.isVisible = true
@@ -173,6 +179,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.ACCOUNT_DETAILS_FRAGMENT -> {
+                            setEmptyDataImage(false)
                             bottomNavigationMenu?.isVisible = false
                             showHamburgerMenu(false)
                             leftButton.isVisible = true
@@ -181,6 +188,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.WEB_PROFILE_VIEW_FRAGMENT -> {
+                            setEmptyDataImage(false)
                             bottomNavigationMenu?.isVisible = false
                             toolbar.isVisible = true
                             showHamburgerMenu(false)
@@ -190,11 +198,13 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         StringConstants.FAVOURITE_FRAGMENT -> {
+                            setEmptyDataImage(true)
                             showHamburgerMenu(true)
                             sharedViewModel.setFragmentName(getString(R.string.menu_favourites))
                         }
 
                         StringConstants.SETTINGS_FRAGMENT -> {
+                            setEmptyDataImage(false)
                             showHamburgerMenu(true)
                             sharedViewModel.setFragmentName(getString(R.string.menu_settings))
                         }
@@ -286,7 +296,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-
                 /**
                  * Observe changes in a LiveData and update the bottom menu of the MainActivity accordingly.
                  *
@@ -339,6 +348,43 @@ class MainActivity : AppCompatActivity() {
                         )
                         // Reset the LiveData here so that it does not trigger again
                         setExitConfirmationDialogVisible(false)
+                    }
+                }
+
+                /**
+                 * Observes the [sharedViewModel.isSearchResultsEmpty] LiveData to handle changes in the
+                 * search results' emptiness.
+                 *
+                 * This method observes the LiveData and updates the visibility and image resource of
+                 * an [ImageView] based on whether the search results are empty or not.
+                 *
+                 * @param isSearchResultsEmpty The LiveData indicating whether the search results are empty.
+                 *   - If `null`, the [ImageView] is shown with a default search account image.
+                 *   - If `true`, the [ImageView] is shown with an image specific to the fragment,
+                 *     or a default no data image for other fragments.
+                 *   - If `false`, the [ImageView] is hidden.
+                 */
+                isSearchResultsEmpty.observe(this@MainActivity) { isSearchResultsEmpty ->
+                    isSearchResultsEmpty?.let { isEmpty ->
+                        binding.emptyImageView.isVisible = isEmpty
+                        if (isEmpty) {
+                            binding.emptyImageView.setImageResource(
+                                when (fragment.value) {
+                                    // In the Home Fragment, show an account search image
+                                    StringConstants.HOME_FRAGMENT -> getImageResources(
+                                        GIT_ACCOUNT_SEARCH_IMAGE_CODE
+                                    )
+                                    // For other Fragments, show a no data image according to the language
+                                    else -> ImageResources.getImageResources(
+                                        NO_DATA_IMAGE_CODE
+                                    )
+                                }
+                            )
+                        }
+                    } ?: run {
+                        // If the LiveData value is null, show the ImageView with a search account image
+                        binding.emptyImageView.isVisible = true
+                        binding.emptyImageView.setImageResource(R.mipmap.search_account)
                     }
                 }
             }

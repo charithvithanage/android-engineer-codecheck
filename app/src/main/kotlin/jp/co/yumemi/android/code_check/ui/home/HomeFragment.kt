@@ -153,6 +153,10 @@ class HomeFragment : Fragment() {
                 setProgressDialogVisible(false)
                 repoList?.let {
                     repoListAdapter.submitList(it)
+                    when {
+                        it.isEmpty() -> sharedViewModel.setEmptyDataImage(true)
+                        else -> sharedViewModel.setEmptyDataImage(false)
+                    }
                 }
             }
 

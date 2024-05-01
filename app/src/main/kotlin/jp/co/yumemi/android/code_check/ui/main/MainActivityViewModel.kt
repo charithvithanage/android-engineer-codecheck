@@ -52,6 +52,8 @@ class MainActivityViewModel @Inject constructor() :
 
     val expandedStates = mutableMapOf<Long, Boolean>()
 
+    private val _isSearchResultsEmpty = MutableLiveData<Boolean>(null)
+    val isSearchResultsEmpty get() = _isSearchResultsEmpty
     /**
      * Sets the currently displayed fragment.
      *
@@ -124,8 +126,26 @@ class MainActivityViewModel @Inject constructor() :
         _isProgressDialogVisible.value = showStatus
     }
 
+    /**
+     * Sets the visibility of the exit confirmation dialog.
+     *
+     * This function updates the value of [existConfirmationDialogVisible] LiveData to control
+     * the visibility of the exit confirmation dialog in the UI. When [showStatus] is `true`,
+     * the exit confirmation dialog will be shown, and when it's `false`, the dialog will be hidden.
+     *
+     * @param showStatus A boolean value indicating whether to show (`true`) or hide (`false`) the exit confirmation dialog.
+     */
     fun setExitConfirmationDialogVisible(showStatus: Boolean) {
         _existConfirmationDialogVisible.value = showStatus
+    }
+
+    /**
+     * Sets whether search results are empty and controls the display of an empty data image.
+     *
+     * @param shouldShow A boolean indicating whether the empty data image should be displayed.
+     */
+    fun setEmptyDataImage(shouldShow: Boolean) {
+        _isSearchResultsEmpty.value = shouldShow
     }
 
 }
