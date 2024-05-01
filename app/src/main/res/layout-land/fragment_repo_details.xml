@@ -10,165 +10,157 @@
             type="jp.co.yumemi.android.code_check.ui.repodetails.RepoDetailsViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-<!--            <ImageButton-->
-<!--                android:id="@+id/btnFav"-->
-<!--                android:layout_width="?attr/actionBarSize"-->
-<!--                android:layout_height="?attr/actionBarSize"-->
-<!--                android:layout_marginStart="@dimen/page_padding"-->
-<!--                android:layout_marginTop="@dimen/page_padding"-->
-<!--                android:background="@drawable/image_button_bg"-->
-<!--                android:contentDescription="@string/favourite_button_image"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent"-->
-<!--                bind:favIcon="@{vm.favouriteStatus}" />-->
+        <!--            <ImageButton-->
+        <!--                android:id="@+id/btnFav"-->
+        <!--                android:layout_width="?attr/actionBarSize"-->
+        <!--                android:layout_height="?attr/actionBarSize"-->
+        <!--                android:layout_marginStart="@dimen/page_padding"-->
+        <!--                android:layout_marginTop="@dimen/page_padding"-->
+        <!--                android:background="@drawable/image_button_bg"-->
+        <!--                android:contentDescription="@string/favourite_button_image"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                bind:favIcon="@{vm.favouriteStatus}" />-->
 
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ownerIconView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/page_padding"
-                android:contentDescription="@null"
-                app:imageUrl="@{vm.gitRepoData.owner.avatarUrl}"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toStartOf="@+id/imageSectionHorizontalGuide2"
-                app:layout_constraintStart_toStartOf="@+id/imageSectionHorizontalGuide1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/RoundedImageViewRounded" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ownerIconView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/page_padding"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            app:imageUrl="@{vm.gitRepoData.owner.avatarUrl}"
+            app:layout_constraintBottom_toTopOf="@+id/nameView"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/imageSectionHorizontalGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="@dimen/content_margin_top"
+            app:shapeAppearanceOverlay="@style/RoundedImageViewRounded" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/imageSectionHorizontalGuide1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.10" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/imageSectionVerticalGuide2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/imageSectionHorizontalGuide2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.30" />
+        <TextView
+            android:id="@+id/nameView"
+            style="@style/NameTextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text='@{vm.gitRepoData.name}'
+            app:layout_constraintBottom_toTopOf="@+id/imageSectionVerticalGuide2"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/nameView"
-                style="@style/NameTextViewStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_margin_top"
-                android:gravity="center"
-                android:text='@{vm.gitRepoData.name}'
-                app:layout_constraintEnd_toEndOf="@+id/ownerIconView"
-                app:layout_constraintStart_toStartOf="@+id/ownerIconView"
-                app:layout_constraintTop_toBottomOf="@+id/ownerIconView" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageSectionHorizontalGuide"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nameView">
 
             <TextView
                 android:id="@+id/languageView"
                 style="@style/LanguageTextViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_margin_top"
-                android:text='@{vm.languageString}'
-                app:layout_constraintEnd_toEndOf="@+id/nameView"
-                app:layout_constraintStart_toStartOf="@+id/nameView"
-                app:layout_constraintTop_toBottomOf="@+id/nameView" />
+                android:text='@{vm.languageString}' />
 
             <Button
                 android:id="@+id/btnMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/content_margin_top"
-                android:text="@{vm.btnValue}"
-                app:layout_constraintEnd_toEndOf="@+id/languageView"
-                app:layout_constraintStart_toStartOf="@+id/languageView"
-                app:layout_constraintTop_toBottomOf="@+id/languageView" />
+                android:text="@{vm.btnValue}" />
+        </LinearLayout>
 
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/imageSectionHorizontalGuide"
+            app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/imageSectionHorizontalGuide"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:baselineAligned="false">
 
-                <LinearLayout
+                <include
+                    android:id="@+id/include2"
+                    layout="@layout/context_view_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:baselineAligned="false">
+                    bind:label='@{vm.startsLabel}'
+                    bind:value="@{vm.gitRepoData.stargazersCount.toString()}" />
 
-                    <include
-                        android:id="@+id/include2"
-                        layout="@layout/context_view_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        bind:label='@{vm.startsLabel}'
-                        bind:value="@{vm.gitRepoData.stargazersCount.toString()}" />
-
-                    <include
-                        android:id="@+id/include"
-                        layout="@layout/context_view_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        bind:label='@{vm.watchersLabel}'
-                        bind:value="@{vm.gitRepoData.watchersCount.toString()}" />
-                </LinearLayout>
-
-                <LinearLayout
+                <include
+                    android:id="@+id/include"
+                    layout="@layout/context_view_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:baselineAligned="false">
-
-                    <include
-                        android:id="@+id/include3"
-                        layout="@layout/context_view_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        bind:label='@{vm.forksLabel}'
-                        bind:value="@{vm.gitRepoData.forksCount.toString()}" />
-
-
-                    <include
-                        android:id="@+id/include4"
-                        layout="@layout/context_view_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        bind:label='@{vm.openIssuesLabel}'
-                        bind:value="@{vm.gitRepoData.openIssuesCount.toString()}" />
-                </LinearLayout>
+                    bind:label='@{vm.watchersLabel}'
+                    bind:value="@{vm.gitRepoData.watchersCount.toString()}" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:baselineAligned="false">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/imageSectionHorizontalGuide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.40" />
+                <include
+                    android:id="@+id/include3"
+                    layout="@layout/context_view_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    bind:label='@{vm.forksLabel}'
+                    bind:value="@{vm.gitRepoData.forksCount.toString()}" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/centerHorizontalGuid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.50" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                <include
+                    android:id="@+id/include4"
+                    layout="@layout/context_view_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    bind:label='@{vm.openIssuesLabel}'
+                    bind:value="@{vm.gitRepoData.openIssuesCount.toString()}" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/imageSectionHorizontalGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.40" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/centerHorizontalGuid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.50" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
