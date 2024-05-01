@@ -47,4 +47,9 @@ object StringConstants {
      */
     const val ACCOUNT_DETAILS_FRAGMENT = "Account Details Fragment"
 
+    /**
+     * Tag for the Git Hub Profile View Fragment.
+     */
+    const val WEB_PROFILE_VIEW_FRAGMENT = "Web Profile View Fragment"
+
 }
