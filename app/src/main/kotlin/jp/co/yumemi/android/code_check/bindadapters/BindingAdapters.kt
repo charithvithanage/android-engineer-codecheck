@@ -1,6 +1,7 @@
 package jp.co.yumemi.android.code_check.bindadapters
 
 import android.graphics.Color
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -70,6 +71,22 @@ object BindingAdapters {
             else -> {
                 textView.setTextAppearance(R.style.LanguageUnSelectedTextStyle)
             }
+        }
+    }
+
+    /**
+     * A Data Binding adapter for setting the favorite icon of a view based on a boolean flag.
+     *
+     * @param view The View for which the favorite icon should be set.
+     * @param isFavourite A boolean flag indicating if the item is marked as a favorite.
+     */
+    @BindingAdapter("favIcon")
+    @JvmStatic
+    fun setFavIcon(view: View, isFavourite: Boolean) {
+        val icon = view.findViewById<ImageView>(R.id.btnFav)
+        when {
+            isFavourite -> icon.setImageResource(R.mipmap.favourites_icon)
+            else -> icon.setImageResource(R.mipmap.no_favourites_icon)
         }
     }
 }

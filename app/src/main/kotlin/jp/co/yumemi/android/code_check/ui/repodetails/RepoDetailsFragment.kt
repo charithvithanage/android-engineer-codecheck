@@ -9,15 +9,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import jp.co.yumemi.android.code_check.R
 import jp.co.yumemi.android.code_check.constants.StringConstants.ACCOUNT_DETAILS_FRAGMENT
-import jp.co.yumemi.android.code_check.constants.StringConstants.HOME_FRAGMENT
 import jp.co.yumemi.android.code_check.databinding.FragmentRepoDetailsBinding
 import jp.co.yumemi.android.code_check.models.GitHubRepoObject
+import jp.co.yumemi.android.code_check.models.LocalDBQueryResponse
+import jp.co.yumemi.android.code_check.ui.customdialogs.ConfirmDialogButtonClickListener
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
+import jp.co.yumemi.android.code_check.utils.DialogUtils
+import jp.co.yumemi.android.code_check.utils.SingleLiveEvent.Companion.observeOnce
 
 /**
  * Fragment that displays details of a GitHub repository and allows users to mark it as a favorite.
@@ -30,7 +34,6 @@ import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
  * @property binding View binding for this fragment's layout
  * @property viewModel View model for managing repository details and favorite status
  * @property gitHubRepo The selected GitHub repository to be displayed
- * @property isFavourite Flag indicating whether the repository is marked as a favorite
  * @property sharedViewModel View model shared with the main activity
  * @property localDBResponseObserver Observer for handling responses from local database operations
  */
@@ -40,6 +43,8 @@ class RepoDetailsFragment : Fragment() {
     private lateinit var viewModel: RepoDetailsViewModel
     private lateinit var gitHubRepo: GitHubRepoObject
     private lateinit var sharedViewModel: MainActivityViewModel
+    private var localDBResponseObserver: Observer<LocalDBQueryResponse>? = null
+    private var isFavourite: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +58,14 @@ class RepoDetailsFragment : Fragment() {
             ViewModelProvider(requireActivity())[RepoDetailsViewModel::class.java].apply {
                 viewModel = this
                 vm = this
+
+                // If savedInstanceState is null, set isFavourite from the arguments.
+                // If savedInstanceState is not null, get isFavourite from the ViewModel.
+                isFavourite =
+                    when (savedInstanceState) {
+                        null -> args.isFavourite
+                        else -> favouriteStatus.value ?: false
+                    }
             }
             lifecycleOwner = this@RepoDetailsFragment
         }
@@ -70,13 +83,6 @@ class RepoDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         viewModelObservers()
-    }
-
-    /**
-     * Initialize ViewModel observers.
-     */
-    private fun viewModelObservers() {
-
     }
 
     /**
@@ -98,6 +104,32 @@ class RepoDetailsFragment : Fragment() {
                     )
                 }
 
+                btnFav.setOnClickListener {
+                    val confirmationMessage = favouriteStatus.value?.let {
+                        if (it) {
+                            R.string.remove_fav_confirmation_message
+                        } else {
+                            R.string.add_fav_confirmation_message
+                        }
+                    } ?: R.string.add_fav_confirmation_message
+
+                    DialogUtils.showConfirmAlertDialog(
+                        requireActivity(),
+                        getString(confirmationMessage),
+                        object : ConfirmDialogButtonClickListener {
+                            override fun onPositiveButtonClick() {
+                                when (favouriteStatus.value) {
+                                    true -> deleteFavourite(gitHubRepo.id)
+                                    else -> addToFavourites()
+                                }
+                            }
+
+                            override fun onNegativeButtonClick() {
+                            }
+                        }
+                    )
+                }
+
                 btnMore.setOnClickListener {
                     navigateToWebProfileFragment()
                 }
@@ -105,18 +137,43 @@ class RepoDetailsFragment : Fragment() {
             }
 
             setGitRepoData(gitHubRepo)
-            sharedViewModel.setFragment(ACCOUNT_DETAILS_FRAGMENT)
+            checkFavStatus(isFavourite)
         }
 
         //Handle back pressed event
         object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                findNavController().navigate(R.id.homeFragment)
-                // Handle back button press for Home Fragment
-                sharedViewModel.setFragment(HOME_FRAGMENT)
+                findNavController().popBackStack()
             }
         }.apply {
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, this)
+        }
+    }
+
+    /**
+     * Initialize ViewModel observers.
+     */
+    private fun viewModelObservers() {
+
+        sharedViewModel.apply {
+            /* According to the response show alert dialog(Error or Success) */
+            localDBResponseObserver = Observer { response ->
+                when {
+                    response.success -> showSuccessDialog(getString(R.string.add_fav_success_message))
+
+                    else -> showErrorDialog(response.message)
+                }
+            }
+        }
+
+
+        /**
+         * Success dialog will only be shown once when the localDBResponse LiveData is triggered,
+         * even if rotate the device. This ensures that the dialog doesn't reappear on device rotation.
+         * Observe the LiveData using a helper function observeOnce
+         */
+        localDBResponseObserver?.let {
+            viewModel.localDBResponse.observeOnce(viewLifecycleOwner, it)
         }
     }
 
@@ -133,5 +190,16 @@ class RepoDetailsFragment : Fragment() {
                 )
             }
         )
+    }
+
+    /**
+     * Called when the view previously created by [onCreateView] has been detached from the fragment.
+     */
+    override fun onDestroyView() {
+        super.onDestroyView()
+        localDBResponseObserver?.let { observer ->
+            // Remove the observer when the Fragment is destroyed
+            viewModel.localDBResponse.removeObserver(observer)
+        }
     }
 }

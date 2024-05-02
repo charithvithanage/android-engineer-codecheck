@@ -119,7 +119,7 @@ class HomeFragment : Fragment() {
                 RepoListAdapter(
                     object : RepoListAdapter.OnItemClickListener {
                         override fun itemClick(item: GitHubRepoObject, isFavorite: Boolean) {
-                            navigateToRepositoryFragment(item)
+                            navigateToRepositoryFragment(item, isFavorite)
                         }
                     }).apply {
                     repoListAdapter = this
@@ -153,6 +153,16 @@ class HomeFragment : Fragment() {
                 setProgressDialogVisible(false)
                 repoList?.let {
                     repoListAdapter.submitList(it)
+                    when {
+                        it.isEmpty() -> sharedViewModel.setEmptyDataImage(true)
+                        else -> sharedViewModel.setEmptyDataImage(false)
+                    }
+                }
+            }
+
+            viewModel.allFavourites?.observe(requireActivity()) { repoList ->
+                repoList?.let {
+                    repoListAdapter.setFavourites(repoList)
                 }
             }
 
@@ -167,12 +177,11 @@ class HomeFragment : Fragment() {
      * Navigates to the RepoDetailsFragment when a GitHub repository item is clicked.
      *
      * @param gitHubRepo The selected GitHub repository object.
-     * @param isFavorite Indicates whether the repository is marked as a favorite.
      */
-    fun navigateToRepositoryFragment(gitHubRepo: GitHubRepoObject) {
+    fun navigateToRepositoryFragment(gitHubRepo: GitHubRepoObject, isFavourite: Boolean) {
         findNavController().navigate(
             HomeFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(
-                gitHubRepo
+                gitHubRepo, isFavourite
             )
         )
     }

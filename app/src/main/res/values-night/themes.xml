@@ -139,7 +139,7 @@
 
     <style name="RecycleViewLabelStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/primary_color</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
     <style name="RecycleViewContextStyle" parent="Widget.AppCompat.TextView">

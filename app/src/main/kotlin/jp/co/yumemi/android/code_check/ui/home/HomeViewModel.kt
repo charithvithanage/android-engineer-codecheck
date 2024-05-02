@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jp.co.yumemi.android.code_check.models.GitHubRepoObject
 import jp.co.yumemi.android.code_check.repositories.GitHubRepository
+import jp.co.yumemi.android.code_check.repositories.LocalGitHubRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,13 +21,19 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val gitHubRepository: GitHubRepository
+    private val gitHubRepository: GitHubRepository,
+    private val localGitHubRepository: LocalGitHubRepository
 ) :
     ViewModel() {
 
     //Error Message Live Data
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage get() = _errorMessage
+
+    /**
+     * LiveData representing a list of all favourite GitHub repositories from the local database.
+     */
+    val allFavourites = localGitHubRepository.getAllRepositories()
 
     //User entered text
     var searchViewText: String? = null

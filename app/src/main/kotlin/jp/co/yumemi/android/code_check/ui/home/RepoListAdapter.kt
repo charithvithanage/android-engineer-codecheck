@@ -31,9 +31,6 @@ class RepoListAdapter @Inject constructor(
 
     private var favoriteItems: List<LocalGitHubRepoObject>? = null
 
-    /**
-     * Interface to handle click events on GitHub repository items.
-     */
     interface OnItemClickListener {
         /**
          * Called when a GitHub repository item is clicked.
@@ -70,7 +67,7 @@ class RepoListAdapter @Inject constructor(
             bind(repoObject)
             binding.apply {
                 root.setOnClickListener {
-                    itemClickListener.itemClick(repoObject, isFavorite)
+                    itemClickListener.itemClick(repoObject,isFavorite)
                 }
                 favIcon.isVisible = isFavorite
             }

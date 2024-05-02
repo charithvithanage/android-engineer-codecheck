@@ -22,6 +22,11 @@
     <string name="welcomePageContent">Explore the world of GitHub like never before with GitHub Explorer, your all-in-one companion for discovering, managing, and staying connected with your favorite GitHub accounts.</string>
     <string name="progressing">Progressing.....</string>
     <string name="exit_confirmation_message">Do you want to exit?</string>
+    <string name="add_fav_confirmation_message">Do you want to add to favourites?</string>
+    <string name="remove_fav_confirmation_message">Do you want to remove this from favourites?</string>
+    <string name="data_already_exist">Data already exists</string>
+    <string name="add_fav_success_message">The account was added to favourites successfully</string>
+    <string name="delete_fav_success_message">The account was deleted from favourites successfully</string>
 
     //Button Labels
     <string name="next">Next</string>
@@ -51,4 +56,5 @@
     <string name="watchers">Watchers</string>
     <string name="open_issues">Open Issues</string>
     <string name="language">Language</string>
+
 </resources>

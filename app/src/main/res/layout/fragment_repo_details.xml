@@ -27,18 +27,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundedImageViewRounded" />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnFav"-->
-<!--            android:layout_width="?attr/actionBarSize"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:layout_marginTop="@dimen/page_padding"-->
-<!--            android:layout_marginEnd="@dimen/page_padding"-->
-<!--            android:background="@drawable/image_button_bg"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/ownerIconView"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            bind:favIcon="@{vm.favouriteStatus}"-->
-<!--            android:contentDescription="@string/favourite_button_image" />-->
+        <ImageButton
+            android:id="@+id/btnFav"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/page_padding"
+            android:layout_marginEnd="@dimen/page_padding"
+            android:background="@drawable/image_button_bg"
+            android:contentDescription="@string/favourite_button_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ownerIconView"
+            app:layout_constraintTop_toTopOf="parent"
+            bind:favIcon="@{vm.favouriteStatus}" />
 
         <TextView
             android:id="@+id/nameView"

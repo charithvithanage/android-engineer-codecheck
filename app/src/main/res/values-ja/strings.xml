@@ -20,6 +20,11 @@
     <string name="welcomePageContent">GitHub Explorer を使って、これまでにないほどの GitHub の世界を探検しましょう。GitHub Explorer は、お気に入りの GitHub アカウントを見つけたり、管理したり、つながったりするためのすべてがひとつになったお供です。</string>
     <string name="progressing">進行中.....</string>
     <string name="exit_confirmation_message">退出しますか?</string>
+    <string name="add_fav_confirmation_message">お気に入りに追加しますか?</string>
+    <string name="remove_fav_confirmation_message">これをお気に入りから削除しますか?</string>
+    <string name="data_already_exist">データはすでに存在します</string>
+    <string name="add_fav_success_message">アカウントがお気に入りに追加されました</string>
+    <string name="delete_fav_success_message">アカウントがお気に入りから削除されました</string>
 
     //ボタンのラベル
     <string name="next">次</string>

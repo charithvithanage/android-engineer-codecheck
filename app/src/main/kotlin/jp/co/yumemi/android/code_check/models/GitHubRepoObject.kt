@@ -42,3 +42,18 @@ data class GitHubRepoObject(
     val language: String
         get() = nullableLanguage ?: "No Language Data"
 }
+
+fun GitHubRepoObject.toGitHubDataClass(): LocalGitHubRepoObject {
+    return LocalGitHubRepoObject(
+        id = id, // Set the ID as needed
+        name = name ?: "",
+        language = language,
+        stargazersCount = stargazersCount,
+        watchersCount = watchersCount,
+        forksCount = forksCount,
+        openIssuesCount = openIssuesCount,
+        avatarUrl = owner?.avatarUrl,
+        ownerType = owner?.type,
+        htmlUrl = owner?.htmlUrl,
+    )
+}

@@ -139,18 +139,18 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="recycleViewLabelStyle" parent="Widget.AppCompat.TextView">
+    <style name="RecycleViewLabelStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/primary_color</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
-    <style name="recycleViewContextStyle" parent="Widget.AppCompat.TextView">
+    <style name="RecycleViewContextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="recycleViewLargeContextStyle" parent="Widget.AppCompat.TextView">
+    <style name="RecycleViewLargeContextStyle" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
