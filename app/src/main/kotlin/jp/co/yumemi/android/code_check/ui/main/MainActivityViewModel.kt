@@ -1,5 +1,6 @@
 package jp.co.yumemi.android.code_check.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,38 @@ class MainActivityViewModel @Inject constructor() :
     private val _fragment = MutableLiveData(WELCOME_FRAGMENT)
     val fragment get() = _fragment
 
+    private val _fragmentName = MutableLiveData("")
+    val fragmentName get() = _fragmentName
+
+    private val _updateLabels = MutableLiveData(true)
+    val updateLabels: LiveData<Boolean> get() = _updateLabels
+
+    private val _showHamburgerMenu = MutableLiveData(true)
+    val showHamburgerMenu get() = _showHamburgerMenu
+
+    //Success Message Dialog Visibility Live Data
+    private val _successMessage = MutableLiveData<String?>()
+    val successMessage get() = _successMessage
+
+    //Warn Message Dialog Visibility Live Data
+    private val _warnMessage = MutableLiveData<String?>()
+    val warnMessage get() = _warnMessage
+
+    //Error Message Dialog Visibility Live Data
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage get() = _errorMessage
+
+    //Progress Dialog Visibility Live Data
+    private val _isProgressDialogVisible = MutableLiveData<Boolean>()
+    val isProgressDialogVisible get() = _isProgressDialogVisible
+
+    private val _existConfirmationDialogVisible = MutableLiveData<Boolean>()
+    val existConfirmationDialogVisible get() = _existConfirmationDialogVisible
+
+    val expandedStates = mutableMapOf<Long, Boolean>()
+
+    private val _isSearchResultsEmpty = MutableLiveData<Boolean>(null)
+    val isSearchResultsEmpty get() = _isSearchResultsEmpty
     /**
      * Sets the currently displayed fragment.
      *
@@ -29,4 +62,90 @@ class MainActivityViewModel @Inject constructor() :
     fun setFragment(fragment: String) {
         _fragment.value = fragment
     }
+
+    /**
+     * @param fragmentName The name of the fragment.
+     */
+    fun setFragmentName(fragmentName: String) {
+        _fragmentName.value = fragmentName
+    }
+
+    /**
+     * Sets the update status of the bottom menu.
+     *
+     * @param isUpdateStatus A boolean indicating whether the bottom menu status should be updated.
+     */
+    fun setUpdateLabels(isUpdateStatus: Boolean) {
+        _updateLabels.value = isUpdateStatus
+    }
+
+    /**
+     * Sets the visibility status of the hamburger menu.
+     *
+     * @param showStatus A boolean value indicating whether the hamburger menu should be shown (`true`) or hidden (`false`).
+     */
+    fun showHamburgerMenu(showStatus: Boolean) {
+        _showHamburgerMenu.value = showStatus
+    }
+
+    /**
+     * Shows a success dialog with the provided message.
+     *
+     * @param successMessage The message to display in the success dialog.
+     */
+    fun showSuccessDialog(successMessage: String?) {
+        _successMessage.value = successMessage
+    }
+
+    /**
+     * Shows a warning dialog with the provided message.
+     *
+     * @param warnMessage The message to display in the warning dialog.
+     */
+    fun showWarnDialog(warnMessage: String?) {
+        _warnMessage.value = warnMessage
+    }
+
+    /**
+     * Shows an error dialog with the provided message.
+     *
+     * @param errorMessage The message to display in the error dialog.
+     */
+    fun showErrorDialog(errorMessage: String?) {
+        _errorMessage.value = errorMessage
+    }
+
+    /**
+     * Toggles the visibility of the progress dialog.
+     *
+     * This function updates the visibility state of the progress dialog based on the provided boolean value.
+     *
+     * @param showStatus If true, the progress dialog will be shown; if false, it will be hidden.
+     */
+    fun setProgressDialogVisible(showStatus: Boolean) {
+        _isProgressDialogVisible.value = showStatus
+    }
+
+    /**
+     * Sets the visibility of the exit confirmation dialog.
+     *
+     * This function updates the value of [existConfirmationDialogVisible] LiveData to control
+     * the visibility of the exit confirmation dialog in the UI. When [showStatus] is `true`,
+     * the exit confirmation dialog will be shown, and when it's `false`, the dialog will be hidden.
+     *
+     * @param showStatus A boolean value indicating whether to show (`true`) or hide (`false`) the exit confirmation dialog.
+     */
+    fun setExitConfirmationDialogVisible(showStatus: Boolean) {
+        _existConfirmationDialogVisible.value = showStatus
+    }
+
+    /**
+     * Sets whether search results are empty and controls the display of an empty data image.
+     *
+     * @param shouldShow A boolean indicating whether the empty data image should be displayed.
+     */
+    fun setEmptyDataImage(shouldShow: Boolean) {
+        _isSearchResultsEmpty.value = shouldShow
+    }
+
 }

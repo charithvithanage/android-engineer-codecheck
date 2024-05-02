@@ -61,7 +61,8 @@ dependencies {
     def test_runner_version = "1.5.2"
     def test_rules_version = "1.5.0"
     def jupiter_version = "5.8.1"
-
+    def retrofit_version = '2.11.0'
+    def room_version = '2.6.1'
 
     implementation "androidx.core:core-ktx:$androidx_core_ktx_version"
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
@@ -78,10 +79,6 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
-    //  ———  coroutines ——— //
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-
     //  ———  Image Library ——— //
     implementation "io.coil-kt:coil:$coil_version"
 
@@ -96,6 +93,7 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espresso_version"
     implementation("androidx.arch.core:core-testing:$core_test_version")
     testImplementation("org.junit.jupiter:junit-jupiter:$jupiter_version")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version")
 
     // ——— Mockito dependencies ——— //
     testImplementation("org.mockito:mockito-core:$mockito_version")
@@ -104,5 +102,21 @@ dependencies {
     // ——— ActivityTestRule ——— //
     androidTestImplementation("androidx.test:rules:$test_rules_version")
     androidTestImplementation("androidx.test:runner:$test_runner_version")
+
+    //  ———  retrofit ——— //
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //  ———  coroutines ——— //
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+
+    //  ———  Image Library ——— //
+    implementation "io.coil-kt:coil:$coil_version"
+
+    // Room
+    implementation "androidx.room:room-runtime:$room_version"
+    ksp("androidx.room:room-compiler:$room_version")
+    implementation "androidx.room:room-ktx:$room_version"
 
 }

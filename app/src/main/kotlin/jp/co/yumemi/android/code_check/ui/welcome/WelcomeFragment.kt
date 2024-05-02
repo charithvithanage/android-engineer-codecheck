@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import jp.co.yumemi.android.code_check.R
+import jp.co.yumemi.android.code_check.constants.PreferenceKeys.APP_LAUNCHED_STATUS
 import jp.co.yumemi.android.code_check.constants.StringConstants
 import jp.co.yumemi.android.code_check.databinding.FragmentWelcomeBinding
 import jp.co.yumemi.android.code_check.ui.main.MainActivityViewModel
@@ -37,8 +39,21 @@ class WelcomeFragment : Fragment() {
     ): View {
         //This Shared view model is using to update Main Activity layout changes from this fragment
         ViewModelProvider(requireActivity())[MainActivityViewModel::class.java].apply {
-            sharedViewModel = this
-            setFragment(StringConstants.WELCOME_FRAGMENT)
+            SharedPreferencesManager.getPreferenceBool(APP_LAUNCHED_STATUS)
+                ?.let {
+                    if(it) {
+                        //Already launched the app
+                        navigateToHomeFragment()
+                    }else{
+                        sharedViewModel = this
+                        setFragment(StringConstants.WELCOME_FRAGMENT)
+                    }
+
+                } ?: run {
+                //If app is launched for the first time
+                sharedViewModel = this
+                setFragment(StringConstants.WELCOME_FRAGMENT)
+            }
         }
 
         FragmentWelcomeBinding.inflate(inflater, container, false).apply {
@@ -86,7 +101,17 @@ class WelcomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.button.setOnClickListener {
-
+            SharedPreferencesManager.savePreferenceBool(
+                APP_LAUNCHED_STATUS,
+                true
+            )
+            navigateToHomeFragment()
         }
+    }
+
+    private fun navigateToHomeFragment() {
+        findNavController().navigate(
+            WelcomeFragmentDirections.actionWelcomeFragmentToHomeFragment()
+        )
     }
 }

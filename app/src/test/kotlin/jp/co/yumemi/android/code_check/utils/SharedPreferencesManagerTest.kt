@@ -14,6 +14,11 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+/**
+ * Unit tests for SharedPreferencesManager.
+ *
+ * @RunWith(MockitoJUnitRunner::class) is used to indicate that MockitoJUnitRunner should be used to run the tests.
+ */
 @RunWith(MockitoJUnitRunner::class)
 class SharedPreferencesManagerTest {
 
@@ -33,6 +38,9 @@ class SharedPreferencesManagerTest {
         SharedPreferencesManager.init(sharedPreferences)
     }
 
+    /**
+     * Test case for [SharedPreferencesManager.getSelectedLanguage] method.
+     */
     @Test
     fun `test getSelectedLanguage returns default language`() {
         // Given
@@ -45,6 +53,9 @@ class SharedPreferencesManagerTest {
         assertEquals(JAPANESE, selectedLanguage)
     }
 
+    /**
+     * Test case for [SharedPreferencesManager.updateSelectedLanguage] method.
+     */
     @Test
     fun `test updateSelectedLanguage`() {
         // Given
@@ -55,6 +66,40 @@ class SharedPreferencesManagerTest {
 
         // Then
         verify(editor).putString(PreferenceKeys.LANGUAGE, jsonString)
+        verify(editor).apply()
+    }
+
+    /**
+     * Test case for [SharedPreferencesManager.getPreferenceBool] method.
+     */
+    @Test
+    fun `test getPreferenceBool`() {
+        // Given
+        val key = "key"
+        val expectedValue = true
+        `when`(sharedPreferences.getBoolean(key, false)).thenReturn(expectedValue)
+
+        // When
+        val retrievedValue = SharedPreferencesManager.getPreferenceBool(key)
+
+        // Then
+        assertEquals(expectedValue, retrievedValue)
+    }
+
+    /**
+     * Test case for [SharedPreferencesManager.savePreferenceBool] method.
+     */
+    @Test
+    fun `test savePreferenceBool`() {
+        // Given
+        val key = "key"
+        val value = true
+
+        // When
+        SharedPreferencesManager.savePreferenceBool(key, value)
+
+        // Then
+        verify(editor).putBoolean(key, value)
         verify(editor).apply()
     }
 }

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sideMenuMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/side_menu_bg_color"
+        android:paddingStart="@dimen/sideMenuPadding"
+        android:paddingEnd="@dimen/sideMenuPadding">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/sideMenuLogoWidth"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@color/white"
+            app:shapeAppearanceOverlay="@style/RoundedImageViewRounded"
+            android:contentDescription="@string/app_logo"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/closeBtn" />
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/sideMenuCloseIconHeight"
+            android:layout_marginTop="@dimen/page_padding"
+            android:adjustViewBounds="true"
+            android:background="@drawable/link_button_background"
+            android:importantForAccessibility="no"
+            android:padding="12dp"
+            android:src="@drawable/close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/mini_vertical_margin"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sideMenuSeparatorHeight"
+                    android:background="@color/menu_item_separator_color" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/homeButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/sideMenuItemPadding"
+                    android:paddingBottom="@dimen/sideMenuItemPadding"
+                    android:background="@drawable/link_button_background">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/sideMenuIconHeight"
+                        android:importantForAccessibility="no"
+                        android:padding="@dimen/sideMenuIconPadding"
+                        android:src="@mipmap/icon_home"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/homeLabel"
+                        style="@style/SideMenuTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_home"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                        app:layout_constraintStart_toEndOf="@+id/imageView4"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="@dimen/sideMenuArrowWidth"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sideMenuSeparatorHeight"
+                    android:background="@color/menu_item_separator_color" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/favButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/sideMenuItemPadding"
+                    android:paddingBottom="@dimen/sideMenuItemPadding"
+                    android:background="@drawable/link_button_background">
+
+                    <ImageView
+                        android:id="@+id/favMenuIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/sideMenuIconHeight"
+                        android:importantForAccessibility="no"
+                        android:padding="@dimen/sideMenuIconPadding"
+                        android:src="@mipmap/menu_fav"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/favMenuLabel"
+                        style="@style/SideMenuTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_favourites"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintStart_toEndOf="@+id/favMenuIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="@dimen/sideMenuArrowWidth"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sideMenuSeparatorHeight"
+                    android:background="@color/menu_item_separator_color" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/settingsButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/sideMenuItemPadding"
+                    android:paddingBottom="@dimen/sideMenuItemPadding"
+                    android:background="@drawable/link_button_background">
+
+                    <ImageView
+                        android:id="@+id/settingsIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/sideMenuIconHeight"
+                        android:importantForAccessibility="no"
+                        android:padding="@dimen/sideMenuIconPadding"
+                        android:src="@mipmap/settings_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/settingsLabel"
+                        style="@style/SideMenuTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/menu_settings"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView8"
+                        app:layout_constraintStart_toEndOf="@+id/settingsIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="@dimen/sideMenuArrowWidth"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sideMenuSeparatorHeight"
+                    android:background="@color/menu_item_separator_color" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/logoutButtonLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/sideMenuItemPadding"
+                    android:paddingBottom="@dimen/sideMenuItemPadding"
+                    android:background="@drawable/link_button_background">
+
+                    <ImageView
+                        android:id="@+id/logoutIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/sideMenuIconHeight"
+                        android:importantForAccessibility="no"
+                        android:padding="@dimen/sideMenuIconPadding"
+                        android:src="@mipmap/logout"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/logoutLabel"
+                        style="@style/SideMenuTextStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/exit"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+                        app:layout_constraintStart_toEndOf="@+id/logoutIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="@dimen/sideMenuArrowWidth"
+                        android:layout_height="wrap_content"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/right_arrow"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sideMenuSeparatorHeight"
+                    android:background="@color/menu_item_separator_color" />
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
