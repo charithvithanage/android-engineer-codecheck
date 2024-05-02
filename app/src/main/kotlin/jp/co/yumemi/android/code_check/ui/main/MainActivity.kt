@@ -365,26 +365,30 @@ class MainActivity : AppCompatActivity() {
                  *   - If `false`, the [ImageView] is hidden.
                  */
                 isSearchResultsEmpty.observe(this@MainActivity) { isSearchResultsEmpty ->
-                    isSearchResultsEmpty?.let { isEmpty ->
-                        binding.emptyImageView.isVisible = isEmpty
-                        if (isEmpty) {
-                            binding.emptyImageView.setImageResource(
-                                when (fragment.value) {
-                                    // In the Home Fragment, show an account search image
-                                    StringConstants.HOME_FRAGMENT -> getImageResources(
-                                        GIT_ACCOUNT_SEARCH_IMAGE_CODE
-                                    )
-                                    // For other Fragments, show a no data image according to the language
-                                    else -> ImageResources.getImageResources(
-                                        NO_DATA_IMAGE_CODE
-                                    )
-                                }
-                            )
+                    if (fragment.value == StringConstants.HOME_FRAGMENT || fragment.value == StringConstants.FAVOURITE_FRAGMENT) {
+                        isSearchResultsEmpty?.let { isEmpty ->
+                            binding.emptyImageView.isVisible = isEmpty
+                            if (isEmpty) {
+                                binding.emptyImageView.setImageResource(
+                                    when (fragment.value) {
+                                        // In the Home Fragment, show an account search image
+                                        StringConstants.HOME_FRAGMENT -> getImageResources(
+                                            GIT_ACCOUNT_SEARCH_IMAGE_CODE
+                                        )
+                                        // For other Fragments, show a no data image according to the language
+                                        else -> ImageResources.getImageResources(
+                                            NO_DATA_IMAGE_CODE
+                                        )
+                                    }
+                                )
+                            }
+                        } ?: run {
+                            // If the LiveData value is null, show the ImageView with a search account image
+                            binding.emptyImageView.isVisible = true
+                            binding.emptyImageView.setImageResource(R.mipmap.search_account)
                         }
-                    } ?: run {
-                        // If the LiveData value is null, show the ImageView with a search account image
-                        binding.emptyImageView.isVisible = true
-                        binding.emptyImageView.setImageResource(R.mipmap.search_account)
+                    } else {
+                        binding.emptyImageView.isVisible = false
                     }
                 }
             }

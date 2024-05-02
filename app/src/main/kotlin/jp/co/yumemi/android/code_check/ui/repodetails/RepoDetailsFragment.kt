@@ -155,14 +155,17 @@ class RepoDetailsFragment : Fragment() {
      */
     private fun viewModelObservers() {
 
-        /* According to the response show alert dialog(Error or Success) */
-        localDBResponseObserver = Observer { response ->
-            when {
-                response.success -> sharedViewModel.showSuccessDialog(response.message)
+        sharedViewModel.apply {
+            /* According to the response show alert dialog(Error or Success) */
+            localDBResponseObserver = Observer { response ->
+                when {
+                    response.success -> showSuccessDialog(getString(R.string.add_fav_success_message))
 
-                else -> sharedViewModel.showErrorDialog(response.message)
+                    else -> showErrorDialog(response.message)
+                }
             }
         }
+
 
         /**
          * Success dialog will only be shown once when the localDBResponse LiveData is triggered,
