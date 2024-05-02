@@ -59,13 +59,7 @@ class RepoDetailsFragment : Fragment() {
                 viewModel = this
                 vm = this
 
-                // If savedInstanceState is null, set isFavourite from the arguments.
-                // If savedInstanceState is not null, get isFavourite from the ViewModel.
-                isFavourite =
-                    when (savedInstanceState) {
-                        null -> args.isFavourite
-                        else -> favouriteStatus.value ?: false
-                    }
+                isFavourite = args.isFavourite
             }
             lifecycleOwner = this@RepoDetailsFragment
         }
