@@ -13,6 +13,7 @@ import jp.co.yumemi.android.code_check.databinding.FragmentCustomAlertDialogBind
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.FAIL
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.SUCCESS
 import jp.co.yumemi.android.code_check.utils.DialogUtils.Companion.WARN
+import jp.co.yumemi.android.code_check.utils.LanguageManager
 import jp.co.yumemi.android.code_check.utils.UIUtils.Companion.changeUiSize
 
 /**
@@ -73,6 +74,11 @@ class CustomAlertDialogFragment : DialogFragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LanguageManager(requireActivity()).loadLanguage()
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return Dialog(requireContext(), theme).apply {
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -111,7 +117,7 @@ class CustomAlertDialogFragment : DialogFragment() {
                 when (type) {
                     SUCCESS -> imageResId = R.mipmap.done
                     FAIL -> imageResId = R.mipmap.cancel
-                    WARN-> imageResId = R.mipmap.warning
+                    WARN -> imageResId = R.mipmap.warning
                 }
 
                 button.setOnClickListener {

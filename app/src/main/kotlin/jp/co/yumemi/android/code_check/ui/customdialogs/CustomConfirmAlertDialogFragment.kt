@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import jp.co.yumemi.android.code_check.databinding.FragmentCustomConfirmAlertDialogBinding
+import jp.co.yumemi.android.code_check.utils.LanguageManager
 import jp.co.yumemi.android.code_check.utils.UIUtils.Companion.changeUiSize
 
 /**
@@ -60,6 +61,11 @@ class CustomConfirmAlertDialogFragment : DialogFragment() {
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             setCanceledOnTouchOutside(false)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        LanguageManager(requireActivity()).loadLanguage()
     }
 
     override fun onCreateView(

@@ -2,12 +2,12 @@
 
 ## Summary
 
-The app utilizes Kotlin, follows a single activity architecture with MVVM using data binding, and incorporates a Room database for handling favorites. It provides functionality to search GitHub repositories by name, view details, and manage favorites. User can change app language to english or japanese
+The app utilizes Kotlin, follows a single activity architecture with MVVM using data binding, and incorporates a Room database for handling favourites. It provides functionality to search GitHub repositories by name, view details, and manage favourites. Users can change the app language to English or Japanese
 
 ## Features
 
 1) ### Welcome Page:
-- Welcome Fragment that serves as the landing page on first app launch
+- Welcome Fragment that serves as the landing page on the first app launch
 - Allowing users to switch between English and Japanese
 
 2) ### GitHub Repository Search:
@@ -21,8 +21,8 @@ The app utilizes Kotlin, follows a single activity architecture with MVVM using 
 
 4) ### Favorites:
 
-- Save repositories as favorites in the Room database.
-- View a list of saved favorites in the Favorites fragment.
+- Save repositories as favourites in the Room database.
+- View a list of saved favourites in the Favorites fragment.
 - Expand items to view details and delete them.
 
 5) ### Settings:
@@ -35,12 +35,39 @@ The app utilizes Kotlin, follows a single activity architecture with MVVM using 
 
 7) ### Localization:
 
-- App supports both japanese and english languages.
+- The app supports both Japanese and English languages.
 
 8) ### Code Quality:
 
 - Follows MVVM architecture, data binding, and Room database best practices.
 - Dependency injection using Dagger Hilt.
+## Main Uis
+
+* Light Theme
+
+<img src="https://yumemicodetests3.s3.amazonaws.com/light_1.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/light_2.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/light_3.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/light_4.jpg" width="200"> 
+<img src="https://yumemicodetests3.s3.amazonaws.com/light_5.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/light_6.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/light_7.jpg" width="200">
+
+* Dark Theme
+
+<img src="https://yumemicodetests3.s3.amazonaws.com/dark_1.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_2.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_3.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_4.jpg" width="200"> 
+<img src="https://yumemicodetests3.s3.amazonaws.com/dark_5.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_6.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_7.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_8.jpg" width="200"> 
+<img src="https://yumemicodetests3.s3.amazonaws.com/dark_9.jpg" width="200"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_10.jpg" width="300"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_11.jpg" width="300"> <img src="https://yumemicodetests3.s3.amazonaws.com/dark_12.jpg" width="300"> 
+<img src="https://yumemicodetests3.s3.amazonaws.com/dark_13.jpg" width="300">
+
+## Demo Videos
+1) Initial App Launch and Welcome page and Main Pages
+<img src="https://yumemicodetests3.s3.amazonaws.com/demo_initial_launch.gif" width="320">
+
+2) Favourite Add, Remove feature
+<img src="https://yumemicodetests3.s3.amazonaws.com/demo_add_remove.gif" width="320">
+
+3) Portrait view with Dark theme
+<img src="https://yumemicodetests3.s3.amazonaws.com/dark_theme_potrait.gif" width="320">
+
+4) Landscape view with Dark theme
+<img src="https://yumemicodetests3.s3.amazonaws.com/dark_theme_landscape.gif" width="500">
+
 
 ## Installation
 1. Clone the repository: `git clone https://github.com/charithvithanage/android-engineer-codecheck.git`
@@ -50,13 +77,13 @@ The app utilizes Kotlin, follows a single activity architecture with MVVM using 
 ## Usage
 1. Open the app on your device
 2. For the first time select preferred language
-3. Click on the Next button to navigate to main activity
+3. Click on the Next button to navigate to the main activity
 4. Use the search functionality to find GitHub repositories.
 5. Click on a repository to view its details.
-6. Navigate to repo details page and click on the "See More" button.
-7. Save repositories as favorites from the details page.
+6. Navigate to the repo details page and click on the "See More" button.
+7. Save repositories as favourites from the details page.
 8. Manage favorites from the Favorites fragment.
-9. Change app language from the Settings page.
+9. Change the app language from the Settings page.
 
 ## Project Structure
 
