@@ -118,8 +118,8 @@ class HomeFragment : Fragment() {
                 // Initializing RepoListAdapter and setting it to RecyclerView
                 RepoListAdapter(
                     object : RepoListAdapter.OnItemClickListener {
-                        override fun itemClick(item: GitHubRepoObject) {
-                            navigateToRepositoryFragment(item)
+                        override fun itemClick(item: GitHubRepoObject, isFavorite: Boolean) {
+                            navigateToRepositoryFragment(item, isFavorite)
                         }
                     }).apply {
                     repoListAdapter = this
@@ -160,6 +160,12 @@ class HomeFragment : Fragment() {
                 }
             }
 
+            viewModel.allFavourites?.observe(requireActivity()) { repoList ->
+                repoList?.let {
+                    repoListAdapter.setFavourites(repoList)
+                }
+            }
+
             viewModel.errorMessage.observe(requireActivity()) { message ->
                 setProgressDialogVisible(false)
                 showErrorDialog(message)
@@ -172,10 +178,10 @@ class HomeFragment : Fragment() {
      *
      * @param gitHubRepo The selected GitHub repository object.
      */
-    fun navigateToRepositoryFragment(gitHubRepo: GitHubRepoObject) {
+    fun navigateToRepositoryFragment(gitHubRepo: GitHubRepoObject, isFavourite: Boolean) {
         findNavController().navigate(
             HomeFragmentDirections.actionRepositoriesFragmentToRepositoryFragment(
-                gitHubRepo
+                gitHubRepo, isFavourite
             )
         )
     }

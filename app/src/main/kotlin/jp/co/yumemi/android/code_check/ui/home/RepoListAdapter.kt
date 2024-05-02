@@ -31,16 +31,14 @@ class RepoListAdapter @Inject constructor(
 
     private var favoriteItems: List<LocalGitHubRepoObject>? = null
 
-    /**
-     * Interface to handle click events on GitHub repository items.
-     */
     interface OnItemClickListener {
         /**
          * Called when a GitHub repository item is clicked.
          *
          * @param item Clicked [GitHubRepoObject].
+         * @param isFavorite Boolean indicating whether the item is marked as a favorite.
          */
-        fun itemClick(item: GitHubRepoObject)
+        fun itemClick(item: GitHubRepoObject, isFavorite: Boolean)
     }
 
     inner class RepoListViewHolder(val binding: LayoutRepoListItemBinding) :
@@ -69,11 +67,20 @@ class RepoListAdapter @Inject constructor(
             bind(repoObject)
             binding.apply {
                 root.setOnClickListener {
-                    itemClickListener.itemClick(repoObject)
+                    itemClickListener.itemClick(repoObject,isFavorite)
                 }
                 favIcon.isVisible = isFavorite
             }
         }
+    }
+
+    /**
+     * Sets the list of favorite repositories to be displayed alongside the main repository list.
+     *
+     * @param repoList List of [LocalGitHubRepoObject] representing favorite repositories.
+     */
+    fun setFavourites(repoList: List<LocalGitHubRepoObject>) {
+        favoriteItems = repoList
     }
 }
 

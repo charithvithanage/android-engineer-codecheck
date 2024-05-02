@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import jp.co.yumemi.android.code_check.MockObjects
 import jp.co.yumemi.android.code_check.MockObjects.Companion.errorServerResponse
 import jp.co.yumemi.android.code_check.repositories.GitHubRepository
+import jp.co.yumemi.android.code_check.repositories.LocalGitHubRepository
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -43,6 +44,10 @@ class HomeViewModelTest {
     @Mock
     private lateinit var gitHubRepository: GitHubRepository
 
+    // Mock local GitHub repository for testing
+    @Mock
+    private lateinit var localGitHubRepository: LocalGitHubRepository
+
     // ViewModel under test
     private lateinit var viewModel: HomeViewModel
 
@@ -57,7 +62,7 @@ class HomeViewModelTest {
         Dispatchers.setMain(Dispatchers.Unconfined)
 
         // Initialize ViewModel with mocked repositories
-        viewModel = HomeViewModel(gitHubRepository)
+        viewModel = HomeViewModel(gitHubRepository,localGitHubRepository)
     }
 
     /**

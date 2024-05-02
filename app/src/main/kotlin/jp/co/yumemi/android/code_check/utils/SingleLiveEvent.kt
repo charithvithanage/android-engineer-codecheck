@@ -3,6 +3,7 @@ package jp.co.yumemi.android.code_check.utils
 import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
@@ -42,6 +43,21 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
         super.observe(owner) {
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
+            }
+        }
+    }
+
+    companion object {
+        /**
+         * Observes the data held by a [LiveData] only once, then automatically removes the observer.
+         *
+         * @param owner The lifecycle owner for this observer.
+         * @param observer The observer that will be notified of data changes.
+         */
+        fun <T> LiveData<T>.observeOnce(owner: LifecycleOwner, observer: Observer<T>) {
+            observe(owner) {
+                observer.onChanged(it)
+                removeObserver(observer)
             }
         }
     }

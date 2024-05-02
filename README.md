@@ -4,8 +4,6 @@
 
 The app utilizes Kotlin, follows a single activity architecture with MVVM using data binding, and incorporates a Room database for handling favorites. It provides functionality to search GitHub repositories by name, view details, and manage favorites. User can change app language to english or japanese
 
-<img src="https://yumimi-code-test.s3.amazonaws.com/full_demo.gif" width="320">
-
 ## Features
 
 1) ### Welcome Page:
@@ -43,9 +41,6 @@ The app utilizes Kotlin, follows a single activity architecture with MVVM using 
 
 - Follows MVVM architecture, data binding, and Room database best practices.
 - Dependency injection using Dagger Hilt.
-
-## Screenshots
-<img src="https://yumimi-code-test.s3.amazonaws.com/Home.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/settings.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/empty_favourites.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/error_alert_dialog.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/github_repo_list.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/repo_details_fragment.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/confirm_alert.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/success_alert.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/profile_web_view_fragment.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/favourite_collapsed_view.jpeg" alt="Image Alt Text" width="200">  <img src="https://yumimi-code-test.s3.amazonaws.com/favourite_expanded_view.jpeg" alt="Image Alt Text" width="200"> 
 
 ## Installation
 1. Clone the repository: `git clone https://github.com/charithvithanage/android-engineer-codecheck.git`
